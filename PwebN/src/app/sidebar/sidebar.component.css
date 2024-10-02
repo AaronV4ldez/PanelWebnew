@@ -1,0 +1,12 @@
+.sidebar {
+    transition: width 0.2s;
+  }
+  
+  .sidebar .item {
+    color: #ffffff; /* Color del texto */
+  }
+  
+  .sidebar .item:hover {
+    background-color: #444444; /* Color al pasar el mouse */
+  }
+  

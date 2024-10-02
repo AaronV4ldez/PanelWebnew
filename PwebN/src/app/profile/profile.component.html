@@ -1,0 +1,17 @@
+<h2>Perfil del Usuario</h2>
+
+<div *ngIf="user; else loading">
+  <p><strong>Nombre:</strong> {{ user.name }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <!-- Agrega más detalles del perfil según sea necesario -->
+</div>
+
+<ng-template #loading>
+  <p>Cargando perfil...</p>
+</ng-template>
+
+
+<!--<app-sidebar></app-sidebar>
+<div style="margin-left: 260px; padding: 20px;">
+  <router-outlet></router-outlet>
+</div>-->
