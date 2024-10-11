@@ -1,0 +1,27 @@
+.modal-content {
+  border: none; /* Eliminar el borde del contenido del modal */
+}
+
+.modal-header{
+  border: none; /* Eliminar los bordes de cada sección */
+}
+.modal-body{
+  padding-bottom: 0;
+  padding-top: 0;
+}
+.modal-footer {
+  border: none; /* Eliminar los bordes de cada sección */
+  margin: 0;
+  padding-top: 0; /* Eliminar márgenes */
+  /*padding: 0; Ajustar el padding si es necesario */
+}
+
+.dashboard-background {
+  background-color: #f2f5ff; /* Cambia este color si lo prefieres */
+  min-height: 100vh; /* Cubre todo el alto visible del navegador */
+  height: 100%; /* Altura flexible */
+  display: flex; /* Alinea los elementos hijos */
+  flex-direction: column; /* Los elementos van de arriba hacia abajo */
+  justify-content: space-between; /* Ajusta los elementos para que no se amontonen */
+  padding: 20px; /* Espaciado opcional */
+}

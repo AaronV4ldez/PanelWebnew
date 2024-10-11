@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  userLogin: string = ''; 
+  userLogin: string = '';
   userPassword: string = '';
   errorMessage: string = '';
 
@@ -34,6 +34,9 @@ export class LoginComponent {
 
         // Guardar el token del usuario
         this.authService.setApiKey(response.access_token);
+        
+        // Guardar el nombre del usuario
+        this.authService.setUserName(response.name); 
 
         // Redirigir al dashboard
         this.router.navigate(['/dashboard']);
@@ -43,10 +46,4 @@ export class LoginComponent {
       }
     );
   }
-  ngOnInit() {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']); // Redirige si ya está autenticado
-    }
-  }
-  
 }
