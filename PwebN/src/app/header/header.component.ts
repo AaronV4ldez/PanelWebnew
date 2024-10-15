@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -10,20 +9,20 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   userName: string = '';
-  userType: string = '';
-  pageTitle: string = '';  // Título de la página actual
+  userType: string = '';  // Cambia esto a string para ser consistente
+  pageTitle: string = '';  
   dropdownOpen = false;
 
   constructor(private authService: AuthService, private router: Router) {
     this.userName = this.authService.getUserName() || 'Usuario';
-    this.userType = this.authService.getUserType() || 'TipoUsuario';
+    const utValue = this.authService.getUserType();  // Obtener el valor de ut
+    this.userType = this.getUserTypeText(utValue);  // Obtener el texto basado en ut
   }
 
   ngOnInit() {
     // Detecta cambios en la ruta para actualizar el título de la página
     this.router.events.subscribe((event) => {
       if (event instanceof ActivatedRoute) {
-        console.log('URL actual:', this.router.url); // <-- Agrega esto para ver la URL actual
         this.setPageTitle(this.router.url);
       }
     });
@@ -37,7 +36,6 @@ export class HeaderComponent implements OnInit {
       case '/profile':
         this.pageTitle = 'Perfil de Usuario';
         break;
-      // Añadir más rutas y títulos según lo que tengas en tu aplicación
       default:
         this.pageTitle = 'Página Desconocida';
     }
@@ -49,5 +47,26 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  getUserTypeText(ut: string | null): string {
+    if (!ut) return 'TipoUsuario';  // Valor por defecto si ut es null
+
+    switch (ut) {
+      case '1':
+        return 'Administrador';
+      case '2':
+        return 'Tramitador';
+      case '3':
+        return 'Administrador';
+      case '4':
+        return 'Super Admin';
+      case '5':
+        return 'Comunicación Social';
+      case '6':
+          return 'Testing'
+      default:
+        return 'Tipo Desconocido';
+    }
   }
 }

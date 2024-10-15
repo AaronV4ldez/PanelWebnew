@@ -11,6 +11,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HeaderComponent } from './header/header.component';
 import { NoticiasComponent } from './noticias/noticias.component';
+import { NoticiasTabla1Component } from './noticias-tabla-1/noticias-tabla-1.component';
+import { NoticiasTabla2Component } from './noticias-tabla-2/noticias-tabla-2.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { NoticiasComponent } from './noticias/noticias.component';
     SidebarComponent,
     ProfileComponent,
     HeaderComponent,
-    NoticiasComponent
+    NoticiasComponent,
+    NoticiasTabla1Component,
+    NoticiasTabla2Component
   ],
   imports: [
     BrowserModule,

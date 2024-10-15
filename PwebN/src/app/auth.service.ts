@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { of } from 'rxjs';
+import { of, tap } from 'rxjs';
 
 
 @Injectable({
@@ -22,8 +22,16 @@ export class AuthService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.post<any>(this.API_LOGIN_URL, body, { headers });
-  }
+    return this.http.post<any>(this.API_LOGIN_URL, body, { headers }).pipe(
+      // Procesar la respuesta
+      tap(response => {
+        // Guarda el token, nombre y ut en el localStorage
+        this.setApiKey(response.access_token);
+        this.setUserName(response.name);
+        this.setUserType(response.ut.toString());  // Guarda ut como string
+      })
+    );
+}
 
   setApiKey(token: string) {
     localStorage.setItem('access_token', token);
@@ -42,8 +50,9 @@ export class AuthService {
     localStorage.setItem('user_name', name); // Guarda el nombre del usuario
   }
   setUserType(ut: string) {
-    localStorage.setItem('user_type', ut); // Guarda el nombre del usuario
-  }
+    localStorage.setItem('user_type', ut); // Guarda el ut
+}
+
   getUserName(): string | null {
     return localStorage.getItem('user_name'); // Obtén el nombre del usuario desde el localStorage
   }
