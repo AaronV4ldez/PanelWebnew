@@ -1,0 +1,16 @@
+.bg-general {
+  background-color: #f2f5ff; /* Cambia este color si lo prefieres */
+  height: calc(100vh - 60px); /* Altura restante después del header */
+  margin-left: 250px; /* Ajusta esto al ancho de tu sidebar */
+  display: flex; /* Alinea los elementos hijos */
+  flex-direction: column; /* Los elementos van de arriba hacia abajo */
+  justify-content: space-between; /* Ajusta los elementos para que no se amontonen */
+  padding: 0; /* Elimina padding para evitar desbordamiento */
+  overflow: auto; /* Permite scroll interno si es necesario */
+}
+html, body {
+  margin: 0; /* Elimina márgenes por defecto */
+  padding: 0; /* Elimina padding por defecto */
+  height: 100%; /* Asegura que el body ocupe toda la altura */
+  overflow: hidden; /* Oculta cualquier scroll */
+}

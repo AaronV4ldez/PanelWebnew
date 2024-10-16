@@ -13,6 +13,7 @@ import { HeaderComponent } from './header/header.component';
 import { NoticiasComponent } from './noticias/noticias.component';
 import { NoticiasTabla1Component } from './noticias-tabla-1/noticias-tabla-1.component';
 import { NoticiasTabla2Component } from './noticias-tabla-2/noticias-tabla-2.component';
+import { ConfiguracionDePublicidadComponent } from './configuracion-de-publicidad/configuracion-de-publicidad.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NoticiasTabla2Component } from './noticias-tabla-2/noticias-tabla-2.com
     HeaderComponent,
     NoticiasComponent,
     NoticiasTabla1Component,
-    NoticiasTabla2Component
+    NoticiasTabla2Component,
+    ConfiguracionDePublicidadComponent
   ],
   imports: [
     BrowserModule,

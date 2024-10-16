@@ -16,12 +16,4 @@
   /*padding: 0; Ajustar el padding si es necesario */
 }
 
-.dashboard-background {
-  background-color: #f2f5ff; /* Cambia este color si lo prefieres */
-  min-height: 100vh; /* Cubre todo el alto visible del navegador */
-  height: 100%; /* Altura flexible */
-  display: flex; /* Alinea los elementos hijos */
-  flex-direction: column; /* Los elementos van de arriba hacia abajo */
-  justify-content: space-between; /* Ajusta los elementos para que no se amontonen */
-  padding: 20px; /* Espaciado opcional */
-}
+

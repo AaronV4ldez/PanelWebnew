@@ -1,1 +1,70 @@
-<p>noticias-tabla-2 works!</p>
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="bg-general">
+    <div class="container mt-5">
+        <div class="container-fluid bg-white" style="height: auto; width: 100%; max-width: 300rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; border-radius: 15px; padding: 20px;">
+            
+            <!-- Título -->
+            <div class="mb-3 w-100">
+                <label for="titulo" class="form-label">Título</label>
+                <input type="text" id="titulo" class="form-control" style="width: 100%;" placeholder="Ingresa el título" [(ngModel)]="titulo">
+            </div>
+            
+            <!-- Descripción -->
+            <div class="mb-3 w-100">
+                <label for="descripcion" class="form-label">Descripción de la noticia</label>
+                <textarea id="descripcion" class="form-control" style="width: 100%;" rows="15" placeholder="Ingresa la descripción de la noticia" [(ngModel)]="descripcion"></textarea>
+            </div>
+            
+            <br>
+            <!-- Botón seleccionar imagen y vista previa centrados -->
+            <div class="mb-3 w-100 d-flex flex-column align-items-center">
+                <button class="btn btn-primary fw-bold" style="height: 4rem; background-color: rgb(112, 34, 131); border-radius: 5px; border-color: rgb(77, 24, 90);" (click)="triggerFileInput()">
+                    <i class="fas fa-file-image"></i>  Selecciona la imagen
+                </button>
+                <input type="file" id="imagen" class="d-none" (change)="onImageChange($event)">
+                <img id="vista-previa" src="#" alt="Vista previa de la imagen" style="display:none; width: 100px; height: 100px; margin-top: 10px;">
+            </div>
+        </div>
+        
+        <!-- Botones en la parte inferior -->
+        <div class="d-flex justify-content-between mt-3" style="width: 100%;">
+            <!-- Botón vista previa -->
+            <button type="button" class="btn btn-primary fw-bold" style="margin-left: 10px; background-color: rgb(1, 139, 191); border-radius: 5px; border-color:rgb(3, 111, 150) ;" (click)="mostrarVistaPrevia()">
+                <i class="fas fa-check"></i> Vista Previa
+            </button>
+
+            <!-- Botones confirmar y volver -->
+            <div>
+                <button type="button" class="btn btn-primary fw-bold" style="background-color: rgb(229, 00, 105); border-radius: 5px; border-color: rgb(192, 4, 92);" (click)="confirmar()">
+                    <i class="fas fa-check"></i> Confirmar
+                </button>
+                <a routerLink="/noticias">
+                    <button class="btn btn-light fw-bold" style="margin-left: 10px; background-color: rgb(242, 245, 255); border-radius: 5px; border-color: black; color: black;">
+                        <i class="fas fa-times"></i> Volver
+                    </button> 
+                    
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal de vista previa -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="previewModalLabel">Vista Previa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h3>{{ titulo }}</h3>
+          <p>{{ descripcion }}</p>
+          <img [src]="imagen" alt="Vista previa de la imagen" style="max-width: 100%;">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
