@@ -36,11 +36,11 @@
             </div>
           </form>
         </div>
-
+        
         <!-- Mensaje de error en una ventanita -->
-        <div *ngIf="errorMessage" class="alert alert-warning" style="position: fixed; top: 20px; right: 20px; z-index: 1000; width: auto; display: flex; align-items: center;">
+        <div *ngIf="errorMessage" class="alert alert-warning" style="position:absolute; top: 30px; right: 30px; z-index: 1000; width: 450px; display: flex; align-items: center;">
           <strong>Error:</strong> {{ errorMessage }}
-          <button (click)="errorMessage = ''" class="btn-close" aria-label="Close" style="margin-left: 10px;"></button>
+          <button (click)="errorMessage = ''" class="btn-close" aria-label="Close" style="margin-right: 10px;"></button>
         </div>
       </div>
     </div>
