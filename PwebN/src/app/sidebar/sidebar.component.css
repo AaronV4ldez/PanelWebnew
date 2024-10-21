@@ -6,6 +6,7 @@
   left: 0;
   top: 0;
   color: white;
+  font-weight:400;
   padding: 20px;
 }
 
@@ -33,5 +34,7 @@
 }
 
 .sidebar ul li a:hover {
-  color: #f39c12; /* Cambia el color al pasar el ratón */
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #1d315c; /* Cambia el color al pasar el ratón */
 }

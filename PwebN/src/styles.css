@@ -12,5 +12,5 @@ html, body {
   margin: 0; /* Elimina márgenes por defecto */
   padding: 0; /* Elimina padding por defecto */
   height: 100%; /* Asegura que el body ocupe toda la altura */
-  overflow: hidden; /* Oculta cualquier scroll */
-}
+  overflow:visible; /* Oculta cualquier scroll */
+} 

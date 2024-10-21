@@ -20,226 +20,25 @@
         <div class="tab-content" id="configTabsContent">
           <!-- Tab: Configurar publicidad -->
           <div class="tab-pane fade show active" id="publicidad" role="tabpanel" aria-labelledby="publicidad-tab">
-            <h3 class="mt-3">Configurar publicidad</h3>
-            <div class="form-group mt-3">
-              <label for="videoUrl">URL de video publicitario</label>
-              <input type="text" id="videoUrl" class="form-control" placeholder="Ingrese la URL del video">
-            </div>
-            <table class="table table-striped mt-4">
-              <thead>
-                <tr>
-                  <th scope="col">Descripción</th>
-                  <th scope="col">Dimensiones</th>
-                  <th scope="col">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Imagen de portada</td>
-                  <td>336x280</td>
-                  <td>
-                    <button class="btn btn-light btn-sm"><i class="fa fa-eye"></i></button>
-                    <button class="btn btn-light btn-sm"><i class="fa fa-pencil"></i></button>
-                    <button class="btn btn-light btn-sm"><i class="fa fa-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Imagen de interiores</td>
-                  <td>320x100</td>
-                  <td>
-                    <button class="btn btn-light btn-sm"><i class="fa fa-eye"></i></button>
-                    <button class="btn btn-light btn-sm"><i class="fa fa-pencil"></i></button>
-                    <button class="btn btn-light btn-sm"><i class="fa fa-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Imagen de precios</td>
-                  <td>750x1334</td>
-                  <td>
-                    <button class="btn btn-light btn-sm"><i class="fa fa-eye"></i></button>
-                    <button class="btn btn-light btn-sm"><i class="fa fa-pencil"></i></button>
-                    <button class="btn btn-light btn-sm"><i class="fa fa-trash"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <app-configurar-publicidad></app-configurar-publicidad>
           </div>
       
           <!-- Tab: Parámetros de cobro -->
           <div class="tab-pane fade" id="parametros" role="tabpanel" aria-labelledby="parametros-tab">
-            <div class="container mt-4">
-                <h3>Parámetros de cobro MX</h3>
-                <div class="row">
-                  <div class="col-md-2">
-                    <label for="zaragozaTotalMX">Anualidad Zaragoza (total)</label>
-                    <input type="text" id="zaragozaTotalMX" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="lerdoTotalMX">Anualidad Lerdo (total)</label>
-                    <input type="text" id="lerdoTotalMX" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="mixtoTotalMX">Anualidad Mixto (total)</label>
-                    <input type="text" id="mixtoTotalMX" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="zaragoza1TotalMX">Saldo Zaragoza 1 (total)</label>
-                    <input type="text" id="zaragoza1TotalMX" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="zaragoza2TotalMX">Saldo Zaragoza 2 (total)</label>
-                    <input type="text" id="zaragoza2TotalMX" class="form-control">
-                  </div>
-                </div>
-              
-                <div class="row mt-3">
-                  <div class="col-md-2">
-                    <label for="zaragozaNetoMX">Anualidad Zaragoza (neto)</label>
-                    <input type="text" id="zaragozaNetoMX" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="lerdoNetoMX">Anualidad Lerdo (neto)</label>
-                    <input type="text" id="lerdoNetoMX" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="mixtoNetoMX">Anualidad Mixto (neto)</label>
-                    <input type="text" id="mixtoNetoMX" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="zaragoza1NetoMX">Saldo Zaragoza 1 (neto)</label>
-                    <input type="text" id="zaragoza1NetoMX" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="zaragoza2NetoMX">Saldo Zaragoza 2 (neto)</label>
-                    <input type="text" id="zaragoza2NetoMX" class="form-control">
-                  </div>
-                </div>
-              
-                <h3 class="mt-4">Parámetros de cobro US</h3>
-                <div class="row">
-                  <div class="col-md-2">
-                    <label for="zaragozaTotalUS">Anualidad Zaragoza (total)</label>
-                    <input type="text" id="zaragozaTotalUS" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="lerdoTotalUS">Anualidad Lerdo (total)</label>
-                    <input type="text" id="lerdoTotalUS" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="mixtoTotalUS">Anualidad Mixto (total)</label>
-                    <input type="text" id="mixtoTotalUS" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="zaragoza1TotalUS">Saldo Zaragoza 1 (total)</label>
-                    <input type="text" id="zaragoza1TotalUS" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="zaragoza2TotalUS">Saldo Zaragoza 2 (total)</label>
-                    <input type="text" id="zaragoza2TotalUS" class="form-control">
-                  </div>
-                </div>
-              
-                <div class="row mt-3">
-                  <div class="col-md-2">
-                    <label for="zaragozaNetoUS">Anualidad Zaragoza (neto)</label>
-                    <input type="text" id="zaragozaNetoUS" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="lerdoNetoUS">Anualidad Lerdo (neto)</label>
-                    <input type="text" id="lerdoNetoUS" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="mixtoNetoUS">Anualidad Mixto (neto)</label>
-                    <input type="text" id="mixtoNetoUS" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="zaragoza1NetoUS">Saldo Zaragoza 1 (neto)</label>
-                    <input type="text" id="zaragoza1NetoUS" class="form-control">
-                  </div>
-                  <div class="col-md-2">
-                    <label for="zaragoza2NetoUS">Saldo Zaragoza 2 (neto)</label>
-                    <input type="text" id="zaragoza2NetoUS" class="form-control">
-                  </div>
-                </div>
-              
-                <h3 class="mt-4">Parámetros Telepeaje</h3>
-                <div class="row">
-                  <div class="col-md-2">
-                    <label for="pagoMinimo">Pago mínimo</label>
-                    <input type="text" id="pagoMinimo" class="form-control">
-                  </div>
-                </div>
-              </div>
+           <app-parametros-de-cobro></app-parametros-de-cobro>
               
           </div>
       
           <!-- Tab: Atención al usuario -->
           <div class="tab-pane fade" id="atencion" role="tabpanel" aria-labelledby="atencion-tab">
-            <div class="container mt-4">
-                <h3>Horarios de atención</h3>
-                <div class="row">
-                  <div class="col-md-3">
-                    <label for="horaInicio">Horarios de atención</label>
-                    <select id="horaInicio" class="form-select">
-                      <option selected>08:00 a. m.</option>
-                      <option>09:00 a. m.</option>
-                      <option>10:00 a. m.</option>
-                      <option>11:00 a. m.</option>
-                      <!-- Agrega más opciones según sea necesario -->
-                    </select>
-                  </div>
-                  <div class="col-md-3">
-                    <label for="horaFin">Horarios de atención</label>
-                    <select id="horaFin" class="form-select">
-                      <option selected>08:00 p. m.</option>
-                      <option>09:00 p. m.</option>
-                      <option>10:00 p. m.</option>
-                      <option>11:00 p. m.</option>
-                      <!-- Agrega más opciones según sea necesario -->
-                    </select>
-                  </div>
-                </div>
-              
-               
-              </div>
+            <app-horarios-de-atencion></app-horarios-de-atencion>
               
           </div>
       
           <!-- Tab: Transmisiones en vivo -->
           <div class="tab-pane fade" id="transmisiones" role="tabpanel" aria-labelledby="transmisiones-tab">
             
-            <div class="container mt-4">
-                <h3>Transmisiones en Vivo</h3>
-                
-                <div class="d-flex justify-content-end mb-3">
-                  <button class="btn btn-primary">Agregar</button>
-                </div>
-              
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">Nombre del video</th>
-                      <th scope="col">URL</th>
-                      <th scope="col">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let video of bridgeLiveCams">
-                      <td>{{ video.cam_title }}</td>
-                      <td><a [href]="video.cam_frame" target="_blank">{{ video.cam_frame }}</a></td>
-                      <td>
-                        <button class="btn btn-outline-primary me-2">
-                          <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-outline-danger">
-                          <i class="fas fa-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              
+            <app-transmisiones-en-vivo></app-transmisiones-en-vivo>
           
         </div>
       </div>
