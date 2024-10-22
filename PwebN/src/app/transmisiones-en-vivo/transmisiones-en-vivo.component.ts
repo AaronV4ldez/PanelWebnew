@@ -77,6 +77,8 @@ agregarVideo() {
         console.log('Video agregado exitosamente', response);
         this.cerrarModal(); // Cerrar el modal
         this.obtenerVideos(); // Refrescar la lista de videos
+        this.abrirAvisoModal(); // Mostrar el modal de aviso
+
       },
       error => {
         console.error('Error al agregar el video', error);
@@ -93,7 +95,7 @@ agregarVideo() {
   }
 }
 
-
+  
   // Función para abrir el modal
   abrirModal(): void {
     const modalElement = document.getElementById('agregarVideoModal');
@@ -103,6 +105,13 @@ agregarVideo() {
     }
   }
 
+  abrirAvisoModal(): void {
+    const avisoModalElement = document.getElementById('avisoModal');
+    if (avisoModalElement) {
+      const avisoModalInstance = new bootstrap.Modal(avisoModalElement);
+      avisoModalInstance.show();
+    }
+  }
   // Función para cerrar el modal
   cerrarModal(): void {
     const modalElement = document.getElementById('agregarVideoModal');
