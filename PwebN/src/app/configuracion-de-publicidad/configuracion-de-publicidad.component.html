@@ -1,46 +1,42 @@
 <app-header></app-header>
 <app-sidebar></app-sidebar>
 <div class="bg-general">
-    <div class="container mt-4 bg-white" style=" border-radius: 15px;">
+    <div class="container mt-4 bg-white" style="border-radius: 15px;">
         <ul class="nav nav-tabs" id="configTabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="publicidad-tab" data-bs-toggle="tab" data-bs-target="#publicidad" type="button" role="tab" aria-controls="publicidad" aria-selected="true">Configurar publicidad</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="parametros-tab" data-bs-toggle="tab" data-bs-target="#parametros" type="button" role="tab" aria-controls="parametros" aria-selected="false">Parámetros de cobro</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="atencion-tab" data-bs-toggle="tab" data-bs-target="#atencion" type="button" role="tab" aria-controls="atencion" aria-selected="false">Atención al usuario</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="transmisiones-tab" data-bs-toggle="tab" data-bs-target="#transmisiones" type="button" role="tab" aria-controls="transmisiones" aria-selected="false">Transmisiones en vivo</button>
-          </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="publicidad-tab" data-bs-toggle="tab" data-bs-target="#publicidad" type="button" role="tab" aria-controls="publicidad" aria-selected="true">Configurar publicidad</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="parametros-tab" data-bs-toggle="tab" data-bs-target="#parametros" type="button" role="tab" aria-controls="parametros" aria-selected="false">Parámetros de cobro</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="atencion-tab" data-bs-toggle="tab" data-bs-target="#atencion" type="button" role="tab" aria-controls="atencion" aria-selected="false">Atención al usuario</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="transmisiones-tab" data-bs-toggle="tab" data-bs-target="#transmisiones" type="button" role="tab" aria-controls="transmisiones" aria-selected="false">Transmisiones en vivo</button>
+            </li>
         </ul>
-        
+
         <div class="tab-content" id="configTabsContent">
-          <!-- Tab: Configurar publicidad -->
-          <div class="tab-pane fade show active" id="publicidad" role="tabpanel" aria-labelledby="publicidad-tab">
-            <app-configurar-publicidad></app-configurar-publicidad>
-          </div>
-      
-          <!-- Tab: Parámetros de cobro -->
-          <div class="tab-pane fade" id="parametros" role="tabpanel" aria-labelledby="parametros-tab">
-           <app-parametros-de-cobro></app-parametros-de-cobro>
-              
-          </div>
-      
-          <!-- Tab: Atención al usuario -->
-          <div class="tab-pane fade" id="atencion" role="tabpanel" aria-labelledby="atencion-tab">
-            <app-horarios-de-atencion></app-horarios-de-atencion>
-              
-          </div>
-      
-          <!-- Tab: Transmisiones en vivo -->
-          <div class="tab-pane fade" id="transmisiones" role="tabpanel" aria-labelledby="transmisiones-tab">
-            
-            <app-transmisiones-en-vivo></app-transmisiones-en-vivo>
-          
+            <!-- Tab: Configurar publicidad -->
+            <div class="tab-pane fade show active" id="publicidad" role="tabpanel" aria-labelledby="publicidad-tab">
+                <app-configurar-publicidad></app-configurar-publicidad>
+            </div>
+
+            <!-- Tab: Parámetros de cobro -->
+            <div class="tab-pane fade" id="parametros" role="tabpanel" aria-labelledby="parametros-tab">
+                <app-parametros-de-cobro></app-parametros-de-cobro>
+            </div>
+
+            <!-- Tab: Atención al usuario -->
+            <div class="tab-pane fade" id="atencion" role="tabpanel" aria-labelledby="atencion-tab">
+                <app-horarios-de-atencion></app-horarios-de-atencion>
+            </div>
+
+            <!-- Tab: Transmisiones en vivo -->
+            <div class="tab-pane fade" id="transmisiones" role="tabpanel" aria-labelledby="transmisiones-tab">
+                <app-transmisiones-en-vivo></app-transmisiones-en-vivo>
+            </div>
         </div>
-      </div>
-      
+    </div>
 </div>

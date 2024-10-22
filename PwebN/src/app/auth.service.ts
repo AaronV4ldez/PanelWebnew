@@ -8,7 +8,7 @@ import { of, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private API_LOGIN_URL = 'https://apisprueba.fpfch.gob.mx/api/v1/session/login';
+  private API_LOGIN_URL = 'https://apisprueba.fpfch.gob.mx/api/v1/account/login';
   private API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IEdhcmNpYSIsImV4cCI6MTcwNDkwMTM1N30.ORsWQWxVBCjlhItaZ1e63qBIqEL1LFOjKuydoEaDBZg';
 
   constructor(private http: HttpClient) {}
@@ -72,7 +72,7 @@ export class AuthService {
       'Content-Type': 'application/json',
     });
   
-    return this.http.get<any>('httpshttps://apisprueba.fpfch.gob.mx/api/v1/session/loginfpfc.gob.mx/', { headers });
+    return this.http.get<any>('https://apisprueba.fpfch.gob.mx/api/v1/account/login', { headers });
   }
   
 }

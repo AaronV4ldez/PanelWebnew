@@ -1,0 +1,15 @@
+.nav-link {
+    background-color: white; /* Color blanco por defecto */
+    color: gray; /* Color de texto por defecto */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.nav-link.active {
+    background-color:  #57348b; /* Color morado cuando está activo */
+    color: white; /* Color de texto en blanco cuando está activo */
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    background-color: lightpurple; /* Color al pasar el mouse (opcional) */
+}
