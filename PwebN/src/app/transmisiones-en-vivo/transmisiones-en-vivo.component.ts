@@ -50,44 +50,49 @@ export class TransmisionesEnVivoComponent implements OnInit {
   }
 
   // Función para agregar un nuevo video
-  agregarVideo() {
-    if (this.publicidadForm.valid) {
-      const { nombreVideo, url } = this.publicidadForm.value;
+  // Función para agregar un nuevo video
+agregarVideo() {
+  if (this.publicidadForm.valid) {
+    const { nombreVideo, url } = this.publicidadForm.value;
 
-      // Construir la URL para la solicitud POST
-      const apiUrl = `https://apisprueba.fpfch.gob.mx/api/v1/panel/mkt/livecam/`;
-      const body = {
-        cam_title: nombreVideo, // Valor del formulario
-        cam_frame: url // Valor del formulario
-      };
+    // Formato del iframe con la URL del video
+    const iframeUrl = `\\u003Ciframe src="${url}" style="border:none; overflow:hidden; width:560px; height:315px" allowfullscreen\\u003E\\u003C/iframe\\u003E`;
 
-      // Agregar el API key en los encabezados
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${this.token}`,
-        'Content-Type': 'application/json'
-      });
+    // Construir la URL para la solicitud POST
+    const apiUrl = `https://apisprueba.fpfch.gob.mx/api/v1/panel/mkt/livecam/`;
+    const body = {
+      cam_title: nombreVideo, // Valor del formulario
+      cam_frame: iframeUrl // URL con el iframe agregado
+    };
 
-      // Realizar la solicitud POST
-      this.http.post(apiUrl, body, { headers }).subscribe(
-        response => {
-          console.log('Video agregado exitosamente', response);
-          this.cerrarModal(); // Cerrar el modal
-          this.obtenerVideos(); // Refrescar la lista de videos
-        },
-        error => {
-          console.error('Error al agregar el video', error);
-          if (error.error) {
-            console.error('Detalles del error:', error.error); // Ver detalles del error
-          } else {
-            console.error('Error desconocido', error); // Manejar otro tipo de error
-          }
+    // Agregar el API key en los encabezados
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`,
+      'Content-Type': 'application/json'
+    });
+
+    // Realizar la solicitud POST
+    this.http.post(apiUrl, body, { headers }).subscribe(
+      response => {
+        console.log('Video agregado exitosamente', response);
+        this.cerrarModal(); // Cerrar el modal
+        this.obtenerVideos(); // Refrescar la lista de videos
+      },
+      error => {
+        console.error('Error al agregar el video', error);
+        if (error.error) {
+          console.error('Detalles del error:', error.error); // Ver detalles del error
+        } else {
+          console.error('Error desconocido', error); // Manejar otro tipo de error
         }
-      );
-    } else {
-      console.log('El formulario no es válido:', this.publicidadForm.value);
-      console.log('Errores del formulario:', this.publicidadForm.errors);
-    }
+      }
+    );
+  } else {
+    console.log('El formulario no es válido:', this.publicidadForm.value);
+    console.log('Errores del formulario:', this.publicidadForm.errors);
   }
+}
+
 
   // Función para abrir el modal
   abrirModal(): void {
