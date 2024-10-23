@@ -108,7 +108,10 @@ export class TransmisionesEnVivoComponent implements OnInit {
           console.log('Video eliminado exitosamente', response);
           this.obtenerVideos(); // Refrescar la lista de videos
           this.selectedVideoId = null; // Reiniciar el ID seleccionado
-          this.abrirAvisoModal(); // Mostrar el modal de aviso
+          this.abrirAvisoEliModal(); // Mostrar el modal de aviso
+          // Cerramos el modal de confirmación de eliminación
+          const eliminarModal = bootstrap.Modal.getInstance(document.getElementById('eliminarModal') as HTMLElement);
+           eliminarModal?.hide();
         },
         error => {
           console.error('Error al eliminar el video', error);
@@ -141,6 +144,13 @@ export class TransmisionesEnVivoComponent implements OnInit {
     if (avisoModalElement) {
       const avisoModal = new bootstrap.Modal(avisoModalElement);
       avisoModal.show();
+    }
+  }
+  abrirAvisoEliModal(): void {
+    const avisoEliModalElement = document.getElementById('eliminadoModal');
+    if (avisoEliModalElement) {
+      const avisoEliModal = new bootstrap.Modal(avisoEliModalElement);
+      avisoEliModal.show();
     }
   }
 
