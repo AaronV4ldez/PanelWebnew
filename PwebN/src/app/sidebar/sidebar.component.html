@@ -1,27 +1,43 @@
 <div class="sidebar">
   <a href="/dashboard">
-  <img src="https://noticias.fpfch.gob.mx/wp-content/uploads/2022/02/logo_trans.png" alt="Logo">
+    <img src="https://noticias.fpfch.gob.mx/wp-content/uploads/2022/02/logo_trans.png" alt="Logo">
   </a>
   <ul>
     <li>
-      <a class="item" routerLink="/dashboard">
-        Inicio
-      </a>
+      <a class="item" routerLink="/dashboard">Inicio</a>
     </li>
     <li>
-      <a class="item" routerLink="/noticias">
-        Noticias
-      </a>
+      <a class="item" routerLink="/noticias">Noticias</a>
     </li>
     <li>
-      <a class="item" routerLink="/configuracion-de-publicidad">
-        Configuracion de Publicidad
-      </a>
+      <a class="item" routerLink="/configuracion-de-publicidad">Configuración de Publicidad</a>
     </li>
     <li>
-      <a class="item" (click)="logout()">
-        Cerrar Sesión
-      </a>
+      <a class="item" (click)="openLogoutModal()">Cerrar Sesión</a>
     </li>
   </ul>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius: 15px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">¿Está seguro de que quiere cerrar sesión?</h5>
+      </div>
+      <div class="modal-body d-flex align-items-center">
+        <div class="col-1 me-2">
+          <i class="fas fa-warning"></i>
+        </div>
+        <p class="fw-light">Para volver a iniciar sesión, necesitará ingresar de nuevo su correo y su contraseña.</p>
+      </div>
+      <div class="modal-footer">
+        <button  type="button" class="btn btn-primary fw-bold" style="background-color: rgb(229, 00, 105); border-radius: 10px; border-color: rgb(192, 4, 92)" (click)="confirmLogout()">
+          <i class="fas fa-check"></i> Aceptar</button>
+        <button type="button" class="btn btn-outline-white" data-dismiss="modal" (click)="closeModal()">
+          <i class="fas fa-times"></i> Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

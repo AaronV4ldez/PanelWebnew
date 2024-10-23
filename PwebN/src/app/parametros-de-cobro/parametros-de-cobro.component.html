@@ -1,30 +1,38 @@
 <!-- src/app/parametros-cobro/parametros-cobro.component.html -->
 <div class="container mt-4">
-<!-- ngFor para iterar sobre cada puente en bridgeRates -->
-  <div *ngFor="let bridge of bridgeRates">
-    <h3>Puente: {{ bridge.bridge_name }}</h3>
+  <h2 class=" mb-4">Parámetros de Cobro</h2>
 
-    <div>
-      <label>Anualidad MX</label>
-      <input [(ngModel)]="bridge.annual_fee_mx"/>
+  <!-- ngFor para iterar sobre cada puente en bridgeRates -->
+  <div *ngFor="let bridge of bridgeRates" class=" p-4 mb-4 rounded shadow-sm">
+    <h3 class="text-Dark">{{ bridge.bridge_name }}</h3>
 
-      <label>Renovación MX</label>
-      <input [(ngModel)]="bridge.annual_renew_fee_mx"/>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Anualidad MX</label>
+        <input [(ngModel)]="bridge.annual_fee_mx" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label>Renovación MX</label>
+        <input [(ngModel)]="bridge.annual_renew_fee_mx" class="form-control" />
+      </div>
     </div>
-    
-    <div>
-      <label>Anualidad US</label>
-      <input [(ngModel)]="bridge.annual_fee_us"/>
 
-      <label>Renovación US</label>
-      <input [(ngModel)]="bridge.annual_renew_fee_us"/>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Anualidad US</label>
+        <input [(ngModel)]="bridge.annual_fee_us" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label>Renovación US</label>
+        <input [(ngModel)]="bridge.annual_renew_fee_us" class="form-control" />
+      </div>
     </div>
   </div>
 
   <!-- Input para el Pago Mínimo fuera del ngFor -->
-  <div>
-    <h3>Parametros Telepeaje</h3>
+  <div class=" p-4 rounded shadow-sm">
+    <h3 class="text-Dark">Parámetros Telepeaje</h3>
     <label>Pago mínimo</label>
-    <input [(ngModel)]="prepayMinimumAmount" />
+    <input [(ngModel)]="prepayMinimumAmount" class="form-control" />
   </div>
 </div>

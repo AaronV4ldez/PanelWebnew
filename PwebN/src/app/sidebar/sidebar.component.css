@@ -38,3 +38,20 @@
   border-radius: 5px;
   background-color: #1d315c; /* Cambia el color al pasar el ratón */
 }
+.modal-content {
+  border: none; /* Eliminar el borde del contenido del modal */
+}
+
+.modal-header{
+  border: none; /* Eliminar los bordes de cada sección */
+}
+.modal-body{
+  padding-bottom: 0;
+  padding-top: 0;
+}
+.modal-footer {
+  border: none; /* Eliminar los bordes de cada sección */
+  margin: 0;
+  padding-top: 0; /* Eliminar márgenes */
+  /*padding: 0; Ajustar el padding si es necesario */
+}

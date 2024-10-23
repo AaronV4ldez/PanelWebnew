@@ -38,12 +38,14 @@ export class TransmisionesEnVivoComponent implements OnInit {
   obtenerVideos(): void {
     this.http.get('https://apisprueba.fpfch.gob.mx/api/v1/autoconfig/mobile').subscribe((response: any) => {
       this.bridgeLiveCams = response.bridgeLiveCams.map((cam: any) => {
+        console.log("json del obtener videos " + response);
         const iframe = cam.cam_frame;
         const srcMatch = iframe.match(/src="([^"]+)"/);
         const src = srcMatch ? srcMatch[1] : '';
         return {
           cam_title: cam.cam_title,
-          cam_frame: src
+          cam_frame: src,
+          entry_id: cam.entry_id
         };
       });
     });
@@ -56,7 +58,7 @@ agregarVideo() {
     const { nombreVideo, url } = this.publicidadForm.value;
 
     // Formato del iframe con la URL del video
-    const iframeUrl = `\\u003Ciframe src="${url}" style="border:none; overflow:hidden; width:560px; height:315px" allowfullscreen\\u003E\\u003C/iframe\\u003E`;
+    const iframeUrl = `<iframe src="${url}" style="border:none; overflow:hidden; width:560px; height:315px" allowfullscreen></iframe>`;
 
     // Construir la URL para la solicitud POST
     const apiUrl = `https://apisprueba.fpfch.gob.mx/api/v1/panel/mkt/livecam/`;
