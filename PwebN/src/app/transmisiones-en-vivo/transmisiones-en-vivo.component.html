@@ -21,7 +21,7 @@
           <button class="btn btn-outline-white me-2" (click)="editarVideo(i)">
             <i class="fas fa-edit"></i>
           </button>
-          <button class="btn btn-outline-white" (click)="eliminarVideo(i)">
+          <button class="btn btn-outline-white" (click)="confirmarEliminar(i)">
             <i class="fas fa-trash"></i>
           </button>
         </td>
@@ -29,7 +29,7 @@
     </tbody>
   </table>
 
-  <!-- Modal -->
+  <!-- Modal para agregar video -->
   <div class="modal fade" id="agregarVideoModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -41,11 +41,11 @@
           <form [formGroup]="publicidadForm">
             <div class="mb-3">
               <label for="tituloInput" class="form-label">Título</label>
-              <input type="text" id="tituloInput" class="form-control" formControlName="nombreVideo" required>
+              <input type="text" id="tituloInput" class="form-control" formControlName="nombreVideo" required />
             </div>
             <div class="mb-3">
               <label for="urlInput" class="form-label">URL</label>
-              <input type="url" id="urlInput" class="form-control" formControlName="url" required>
+              <input type="url" id="urlInput" class="form-control" formControlName="url" required />
             </div>
           </form>
         </div>
@@ -60,22 +60,39 @@
       </div>
     </div>
   </div>
+
   <!-- Modal de aviso -->
-<div class="modal fade" id="avisoModal" tabindex="-1" aria-labelledby="avisoModalTitle" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="avisoModalTitle">Aviso</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        El video se ha agregado exitosamente.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+  <div class="modal fade" id="avisoModal" tabindex="-1" aria-labelledby="avisoModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="avisoModalTitle">Aviso</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">El video se ha agregado exitosamente.</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- Modal para confirmar eliminación -->
+  <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarModalLabel">Eliminar Video</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro de que deseas eliminar este video?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="eliminarVideo()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
