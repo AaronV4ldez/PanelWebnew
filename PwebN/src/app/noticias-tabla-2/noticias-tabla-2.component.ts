@@ -19,6 +19,16 @@ export class NoticiasTabla2Component {
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
 
+  ngOnInit() {
+    // Escuchar el evento de cierre del modal
+    const successModalElement = document.getElementById('successModal');
+    if (successModalElement) {
+      successModalElement.addEventListener('hidden.bs.modal', () => {
+        this.redirigirANoticias(); // Llamar a la función de redirección
+      });
+    }
+  }
+
   // Método para manejar el cambio de imagen y mostrar vista previa
 onImageChange(event: any) {
   const file = event.target.files[0];
@@ -83,11 +93,16 @@ onImageChange(event: any) {
       active: 1 // Estado activo
     };
   
-    this.http.post('https://apisprueba.fpfch.gob.mx/api/v1/panel/mkt/news', body, { headers })
+    this.http.post(this.apiUrl, body, { headers })
       .subscribe(
         response => {
           console.log('Noticia publicada exitosamente:', response);
-          // Aquí puedes manejar el éxito de la publicación, como mostrar una notificación
+          // Mostrar el modal de éxito
+          const successModalElement = document.getElementById('successModal');
+          if (successModalElement) {
+            const successModal = new Modal(successModalElement);
+            successModal.show();
+          }
         },
         error => {
           console.error('Error publicando la noticia:', error);
@@ -97,6 +112,9 @@ onImageChange(event: any) {
   }
   
   
+  redirigirANoticias() {
+    this.router.navigate(['/noticias']);
+  }
   
   
 }
