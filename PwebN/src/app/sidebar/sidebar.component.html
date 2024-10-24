@@ -4,16 +4,36 @@
   </a>
   <ul>
     <li>
-      <a class="item" routerLink="/dashboard">Inicio</a>
+      <a class="item" routerLink="/dashboard">
+        <i class="fa fa-pie-chart"></i> Inicio</a>
     </li>
     <li>
-      <a class="item" routerLink="/noticias">Noticias</a>
+      <a class="item" routerLink="/tramites">
+        <i class="fa fa-bookmark"></i> Tramites</a>
     </li>
     <li>
-      <a class="item" routerLink="/configuracion-de-publicidad">Configuración de Publicidad</a>
+      <a class="item" routerLink="/#">
+        <i class="fa fa-calendar"></i> Citas</a>
     </li>
     <li>
-      <a class="item" (click)="openLogoutModal()">Cerrar Sesión</a>
+      <a class="item" routerLink="/noticias">
+        <i class="far fa-comment-alt"></i> Noticias</a>
+    </li>
+    <li>
+      <a class="item" routerLink="/configuracion-de-publicidad">
+        <i class="fa fa-gear"></i> Configuración de Publicidad</a>
+    </li>
+    <li>
+      <a class="item" routerLink="/usuarios-de-panel-web">
+        <i class="fa fa-desktop"></i> Usuarios de Panel Web</a>
+    </li>
+    <li>
+      <a class="item" routerLink="/usuarios-de-app-movil">
+        <i class="fa fa-mobile-alt"></i> Usuarios de App Móvil</a>
+    </li>
+    <li>
+      <a class="item" (click)="openLogoutModal()">
+        <i class="fa fa-sign-out"></i> Cerrar Sesión</a>
     </li>
   </ul>
 </div>

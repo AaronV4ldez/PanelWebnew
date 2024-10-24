@@ -7,6 +7,9 @@ import { AuthGuard } from './auth.guard';
 import { NoticiasComponent } from './noticias/noticias.component';
 import { NoticiasTabla2Component } from './noticias-tabla-2/noticias-tabla-2.component';
 import { ConfiguracionDePublicidadComponent } from './configuracion-de-publicidad/configuracion-de-publicidad.component';
+import { TramitesComponent } from './tramites/tramites.component';
+import { UsuariosDePwebComponent } from './usuarios-de-pweb/usuarios-de-pweb.component';
+import { UsuariosDeAppComponent } from './usuarios-de-app/usuarios-de-app.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,7 +18,10 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent},
   { path: 'noticias', component: NoticiasComponent },
   { path: 'noticias-create', component: NoticiasTabla2Component},
-  { path: 'configuracion-de-publicidad', component: ConfiguracionDePublicidadComponent}
+  { path: 'configuracion-de-publicidad', component: ConfiguracionDePublicidadComponent},
+  { path: 'tramites', component: TramitesComponent},
+  { path: 'usuarios-de-panel-web', component: UsuariosDePwebComponent},
+  { path: 'usuarios-de-app-movil', component: UsuariosDeAppComponent}
 
 ];
 

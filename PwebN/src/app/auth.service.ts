@@ -29,6 +29,7 @@ export class AuthService {
         this.setApiKey(response.access_token);
         this.setUserName(response.name);
         this.setUserType(response.ut.toString());  // Guarda ut como string
+        this.setUserId(response.id.toString());
       })
     );
 }
@@ -48,6 +49,9 @@ export class AuthService {
 
   setUserName(name: string) {
     localStorage.setItem('user_name', name); // Guarda el nombre del usuario
+  }
+  setUserId(uID: string){
+    localStorage.setItem('id', uID);
   }
   setUserType(ut: string) {
     localStorage.setItem('user_type', ut); // Guarda el ut

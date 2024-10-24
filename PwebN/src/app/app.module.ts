@@ -19,6 +19,9 @@ import { TransmisionesEnVivoComponent } from './transmisiones-en-vivo/transmisio
 import { ParametrosDeCobroComponent } from './parametros-de-cobro/parametros-de-cobro.component';
 import { HorariosDeAtencionComponent } from './horarios-de-atencion/horarios-de-atencion.component';
 import { ConfigurarPublicidadComponent } from './configurar-publicidad/configurar-publicidad.component';
+import { TramitesComponent } from './tramites/tramites.component';
+import { UsuariosDePwebComponent } from './usuarios-de-pweb/usuarios-de-pweb.component';
+import { UsuariosDeAppComponent } from './usuarios-de-app/usuarios-de-app.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { ConfigurarPublicidadComponent } from './configurar-publicidad/configura
     TransmisionesEnVivoComponent,
     ParametrosDeCobroComponent,
     HorariosDeAtencionComponent,
-    ConfigurarPublicidadComponent
+    ConfigurarPublicidadComponent,
+    TramitesComponent,
+    UsuariosDePwebComponent,
+    UsuariosDeAppComponent
   ],
   imports: [
     BrowserModule,
