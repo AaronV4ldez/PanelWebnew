@@ -13,26 +13,36 @@ import { Modal } from 'bootstrap';
 export class NoticiasTabla2Component {
   titulo: string = '';
   descripcion: string = '';
-  imagen: any = null;
+  imagenNoti: string = '';
   apiUrl: string = 'https://apisprueba.fpfch.gob.mx/api/v1/panel/mkt/news';
   token: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IEdhcmNpYSIsImV4cCI6MTcwNDkwMTM1N30.ORsWQWxVBCjlhItaZ1e63qBIqEL1LFOjKuydoEaDBZg'; // Token proporcionado
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
 
   // Método para manejar el cambio de imagen y mostrar vista previa
-  onImageChange(event: any) {
-    const file = event.target.files[0];
+onImageChange(event: any) {
+  const file = event.target.files[0];
+
+  if (file) {
     const reader = new FileReader();
 
     reader.onload = (e: any) => {
       const imgElement = document.getElementById('vista-previa') as HTMLImageElement;
       imgElement.src = e.target.result;
       imgElement.style.display = 'block'; // Mostrar imagen en vista previa
-      this.imagen = e.target.result; // Guardar la imagen como base64
+      this.imagenNoti = e.target.result; // Guardar la imagen como base64
     };
 
     reader.readAsDataURL(file);
+  } else {
+    // Si no hay archivo, es posible que quieras manejar el caso de un enlace
+    const imageUrl = 'URL_DE_TU_IMAGEN'; // Reemplaza con el enlace real
+    const imgElement = document.getElementById('vista-previa') as HTMLImageElement;
+    imgElement.src = imageUrl;
+    imgElement.style.display = 'block'; // Mostrar imagen en vista previa
+    this.imagenNoti = imageUrl; // Guardar el enlace de la imagen
   }
+}
 
   // Método para disparar el input file
   triggerFileInput() {
@@ -69,7 +79,7 @@ export class NoticiasTabla2Component {
       note_title: this.titulo, // Título de la noticia
       note_content: this.descripcion, // Contenido de la noticia
       note_hyperlink: 'NULL', // Enlace, pero enviamos NULL
-      note_media_link: 'https://noticias.fpfch.gob.mx/wp-content/uploads/2022/02/logo_trans.png', // Enlace de la imagen (en base64)
+      note_media_link: this.imagenNoti, // Enlace de la imagen (en base64)
       active: 1 // Estado activo
     };
   
