@@ -89,7 +89,7 @@ onImageChange(event: any) {
       note_title: this.titulo, // Título de la noticia
       note_content: this.descripcion, // Contenido de la noticia
       note_hyperlink: 'NULL', // Enlace, pero enviamos NULL
-      note_media_link: this.imagenNoti, // Enlace de la imagen (en base64)
+      note_media_link: this.imagenNoti, // Enlace de la imagen
       active: 1 // Estado activo
     };
   

@@ -1,73 +1,82 @@
-<div class="container-fluid bg-white" style="height: 39rem; width: 100%; max-width: 300rem;  display:flex; align-items: center; justify-content: center; border-radius: 15px;">
-  <div class="container border border-gray" style="max-width: 90%;">
-    <div class="row">
-      <div class="col-9">
-        <h1>Noticias</h1>
+<div class="container-fluid bg-white" style="height: auto; width: 100%; max-width: 100rem; display:flex; flex-direction: column; justify-content: center; border-radius: 15px; padding: 20px;">
+  <div class="container border border-light" style="max-width: 95%; padding: 20px;">
+    <div class="row mb-4">
+      <div class="col-6">
+        <h2 class="">Noticias</h2>
       </div>
-      <div class="col-1">
-        <button class="btn btn-light btn-sm"><i class="fa fa-search"></i></button>
-      </div>
-      <div class="col-1">
+      <div class="col-6 text-end">
+        <button class="btn btn-light btn-sm me-2"><i class="fa fa-search"></i></button>
         <a routerLink="/noticias-create">
-          <button class="btn btn-light btn-sm"><i class="fa-plus">Agregar</i></button>
-        </a> 
-      </div>
-      <div class="col-1">
-        <button class="btn btn-light btn-sm">Exportar</button>
+          <button class="btn btn-primary btn-sm me-2"><i class="fa fa-plus"></i> Agregar</button>
+        </a>
+        <button class="btn btn-outline-secondary btn-sm">Exportar</button>
       </div>
     </div>
 
     <!-- Encabezados de la tabla -->
-    <div class="row border border-gray">
+    <div class="row border-bottom border-light bg-light py-2">
       <div class="col-8">
-        <p>Título</p>
+        <strong>Título</strong>
       </div>
       <div class="col-2">
-        <p>Fecha de alta</p>
+        <strong>Fecha de alta</strong>
       </div>
-      <div class="col-2"></div>
+      <div class="col-2">
+        <strong>Acciones</strong>
+      </div>
     </div>
 
-    <!-- Fila de cada noticia usando ngFor -->
-    <div *ngFor="let noticia of noticias" class="row border border-gray bg-light">
-      <div class="col-8">
-        <p>{{ noticia.note_title }}</p>
+    <!-- Fila de cada noticia -->
+    <div *ngFor="let noticia of noticias" class="row border-bottom border-light py-2 align-items-center">
+      <div class="col-8 text-truncate">
+        <p class="m-0">{{ noticia.note_title }}</p>
       </div>
       <div class="col-2">
-        <p>{{ noticia.created_at | date: 'short' }}</p>
+        <p class="m-0">{{ noticia.created_at | date: 'dd MMM yyyy hh:mm a' }}</p>
       </div>
-      <div class="col-2">
-        <div class="row">
-          <div class="col-4">
-            <button class="btn btn-light btn-sm" (click)="abrirModal(noticia)"><i class="fa fa-eye"></i></button>
-          </div>
-          <div class="col-4">
-            <button class="btn btn-light btn-sm"><i class="fa fa-pen-to-square"></i></button>
-          </div>
-          <div class="col-4">
-            <button class="btn btn-light btn-sm"><i class="fa fa-trash"></i></button>
-          </div>
-        </div>
+      <div class="col-2 text-end">
+        <button class="btn btn-light btn-sm me-1" (click)="abrirModal(noticia)" title="Ver"><i class="fa fa-eye"></i></button>
+        <button class="btn btn-light btn-sm me-1" title="Editar"><i class="fa fa-pen-to-square"></i></button>
+        <button class="btn btn-light btn-sm" (click)="confirmarEliminar(noticia)" title="Eliminar"><i class="fa fa-trash"></i></button>
       </div>
     </div>
-  </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="noticiaModal" tabindex="-1" aria-labelledby="noticiaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 25%;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="noticiaModalLabel">{{ noticiaSeleccionada?.note_title }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="embed-responsive" style="position: relative; width: 100%; height: 0; padding-bottom: 177.78%;">
-            <iframe [src]="safeUrl(noticiaSeleccionada?.note_hyperlink)" 
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-                    frameborder="0" allowfullscreen></iframe>
+    <!-- Modal de confirmación de eliminación -->
+    <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>¿Seguro que quieres eliminar esta noticia?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="eliminarNoticia()">Sí, eliminar</button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Modal de éxito al eliminar -->
+    <div class="modal fade" id="eliminarExitoModal" tabindex="-1" aria-labelledby="eliminarExitoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="eliminarExitoModalLabel">Noticia Eliminada</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Noticia eliminada correctamente.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

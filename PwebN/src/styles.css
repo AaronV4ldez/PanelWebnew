@@ -14,3 +14,23 @@ html, body {
   height: 100%; /* Asegura que el body ocupe toda la altura */
   overflow:visible; /* Oculta cualquier scroll */
 } 
+.modal-content {
+  border: none; /* Eliminar el borde del contenido del modal */
+}
+
+.modal-header{
+  border: none; /* Eliminar los bordes de cada sección */
+}
+.modal-dialog{
+  border:none;
+}
+.modal-body{
+  padding-bottom: 0;
+  padding-top: 0;
+}
+.modal-footer {
+  border: none; /* Eliminar los bordes de cada sección */
+  margin: 0;
+  padding-top: 0; /* Eliminar márgenes */
+  /*padding: 0; Ajustar el padding si es necesario */
+}

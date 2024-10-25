@@ -11,7 +11,7 @@
                         <input type="date" class="form-control me-2" placeholder="Hasta">
                         <button class="btn btn-primary"><i class="fa fa-search"></i></button>
                     </div>
-                    <button class="btn btn-outline-primary"><i class="fa fa-download"></i> Exportar</button>
+                   <!-- <button class="btn btn-outline-primary"><i class="fa fa-download"></i> Exportar</button>-->
                 </div>
 
                 <table class="table table-hover">
@@ -35,15 +35,17 @@
                                 <span [ngClass]="{
                                     'badge bg-success': tramite.estatus === 'Asignado a asesor',
                                     'badge bg-warning': tramite.estatus === 'Trámite pre-autorizado',
-                                    'badge bg-danger': tramite.estatus === 'Documentos rechazados',
-                                    'badge bg-info': tramite.estatus === 'Finalizado',
+                                    'badge bg-danger': tramite.estatus === 'Documento(s) rechazado(s)',
+                                    'badge bg-info': tramite.estatus === 'Cita agendada',
+                                    'badge bg-light': tramite.estatus === 'Terminado',
+                                    'badge bg-black': tramite.estatus === 'Proceso cancelado',
                                     'badge bg-secondary': tramite.estatus === 'Iniciado'
                                 }">
-                                    {{ tramite.estatus }} <!-- Aquí se usa status -->
+                                    {{ tramite.estatus }} 
                                 </span>
                             </td>
-                            <td>{{ tramite.creadoEn | date: 'dd-MM-yyyy' }}</td>
-                            <td>{{ tramite.ultimoMovimiento | date:'dd-MM-yyyy' }}</td> <!-- Aquí se usa updated_at -->
+                            <td>{{ tramite.creadoEn | date: 'dd MMM yyyy' }}</td>
+                            <td>{{ tramite.ultimoMovimiento | date:'dd MMM yyyy' }}</td> 
                             <td><button class="btn btn-outline-secondary"><i class="fa fa-eye"></i></button></td>
                         </tr>
                     </tbody>
