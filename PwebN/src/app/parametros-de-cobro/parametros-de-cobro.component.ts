@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ParametrosDeCobroComponent implements OnInit {
 
-  bridgeRates: any[] = [];
+  bridgesConfig: any[] = [];
   prepayMinimumAmount: number = 0;
 
   // URL de la API
@@ -21,7 +21,7 @@ export class ParametrosDeCobroComponent implements OnInit {
     // Realiza la solicitud a la API
     this.http.get<any>(this.apiUrl).subscribe(data => {
       // Almacena los datos recibidos de la API
-      this.bridgeRates = data.bridgeRates; // Datos de los puentes
+      this.bridgesConfig = data.bridgesConfig; // Datos de los puentes
       this.prepayMinimumAmount = data.globalConfig.prepay_minimum_amount; // Pago mínimo
     });
   }
