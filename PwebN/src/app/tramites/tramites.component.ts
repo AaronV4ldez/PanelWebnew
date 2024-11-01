@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-tramites',
@@ -23,16 +25,25 @@ export class TramitesComponent implements OnInit {
       (data) => {
         this.tramites = data.map(tramite => ({
           folio: tramite.folio,
-          nombreUsuario: tramite.user_full_name, // Puedes cambiar esto al campo que desees
+          nombreUsuario: tramite.user_full_name,
           eltramite: tramite.procedure_name,
           estatus: tramite.status,
           creadoEn: tramite.created_at,
-          ultimoMovimiento: tramite.updated_at // O cualquier otro campo que quieras mostrar
+          ultimoMovimiento: tramite.updated_at
         }));
       },
       (error) => {
         console.error('Error al obtener los trámites', error);
       }
     );
+  }
+
+  exportarExcel(): void {
+    const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.tramites);
+    const libro: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Trámites');
+    
+    const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
+    saveAs(new Blob([archivo], { type: 'application/octet-stream' }), 'tramites.xlsx');
   }
 }
