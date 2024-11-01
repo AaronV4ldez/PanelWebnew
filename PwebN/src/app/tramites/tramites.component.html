@@ -1,56 +1,72 @@
 <app-header></app-header>
 <app-sidebar></app-sidebar>
-<div class="bg-general"><!--Div bg general inicio-->
-    <div class="container mt-4 ">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="mb-3">TRÁMITES</h3>
-                <div class="d-flex justify-content-between mb-3">
-                    <div class="d-flex">
-                        <input type="date" class="form-control me-2" placeholder="Desde">
-                        <input type="date" class="form-control me-2" placeholder="Hasta">
-                        <button class="btn btn-primary"><i class="fa fa-search"></i></button>
-                    </div>
-                   <!-- <button class="btn btn-outline-primary"><i class="fa fa-download"></i> Exportar</button>-->
-                </div>
+<div class="bg-general">
+    <div class="content-wrapper contenedor-cuadro">
+        <h3 class="title">TRÁMITES</h3>
 
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Folio</th>
-                            <th>Solicitante</th> 
-                            <th>Trámite</th>
-                            <th>Estatus</th>
-                            <th>Creado</th>
-                            <th>Último movimiento</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let tramite of tramites">
-                            <td>{{ tramite.folio }}</td>
-                            <td>{{ tramite.nombreUsuario }}</td> <!-- Aquí se usa sentri -->
-                            <td class="text-primary">{{ tramite.eltramite }}</td> <!-- Aquí se usa procedure_name -->
-                            <td>
-                                <span [ngClass]="{
-                                    'badge bg-success': tramite.estatus === 'Asignado a asesor',
-                                    'badge bg-warning': tramite.estatus === 'Trámite pre-autorizado',
-                                    'badge bg-danger': tramite.estatus === 'Documento(s) rechazado(s)',
-                                    'badge bg-info': tramite.estatus === 'Cita agendada',
-                                    'badge bg-light': tramite.estatus === 'Terminado',
-                                    'badge bg-black': tramite.estatus === 'Proceso cancelado',
-                                    'badge bg-secondary': tramite.estatus === 'Iniciado'
-                                }">
-                                    {{ tramite.estatus }} 
-                                </span>
-                            </td>
-                            <td>{{ tramite.creadoEn | date: 'dd MMM yyyy' }}</td>
-                            <td>{{ tramite.ultimoMovimiento | date:'dd MMM yyyy' }}</td> 
-                            <td><button class="btn btn-outline-secondary"><i class="fa fa-eye"></i></button></td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="filters-container d-flex justify-content-between align-items-center mb-3">
+            <div class="date-inputs d-flex">
+                <input type="text" class="form-control me-2" placeholder="Desde" onfocus="(this.type='date')">
+                <input type="text" class="form-control me-2" placeholder="Hasta" onfocus="(this.type='date')">
+                <button class="btn btn-primary search-btn"><i class="fa fa-search"></i></button>
+            </div>
+            <button class="btn btn-outline-primary export-btn"><i class="fa fa-download"></i> Exportar</button>
+        </div>
+
+        <table class="table custom-table">
+            <thead>
+                <tr>
+                    <th>Folio</th>
+                    <th>Nombre de usuario</th>
+                    <th>Trámite</th>
+                    <th>Estatus</th>
+                    <th>Último movimiento</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tramite of tramites">
+                    <td>{{ tramite.folio }}</td>
+                    <td>{{ tramite.nombreUsuario }}</td>
+                    <td class="text-primary">{{ tramite.eltramite }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="{
+                            'badge-iniciado': tramite.estatus === 'Iniciado',
+                            'badge-asesor': tramite.estatus === 'Asignado a asesor',
+                            'badge-pre-autorizado': tramite.estatus === 'Trámite pre-autorizado',
+                            'badge-rechazado': tramite.estatus === 'Documentos rechazados',
+                            'badge-finalizado': tramite.estatus === 'Finalizado',
+                            'badge-cita': tramite.estatus === 'Cita Agendada',
+                            'badge-cancelada': tramite.estatus === 'Proceso Cancelado'
+                        }">{{ tramite.estatus }}</span>
+                    </td>                    
+                    <td>{{ tramite.ultimoMovimiento }}</td>
+                    <td><button class="btn btn-link"><i class="fa fa-eye"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination-controls d-flex justify-content-between align-items-center">
+            <div>
+                <label>Items por página</label>
+                <select class="form-select">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+            <span>1-5 de 100 items</span>
+            <div>
+                <select class="form-select">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+                <span>de 40 páginas</span>
+            </div>
+            <div>
+                <button class="btn btn-link"><i class="fa fa-chevron-left"></i></button>
+                <button class="btn btn-link"><i class="fa fa-chevron-right"></i></button>
             </div>
         </div>
     </div>
-</div><!--Div bg general fin-->
+</div>

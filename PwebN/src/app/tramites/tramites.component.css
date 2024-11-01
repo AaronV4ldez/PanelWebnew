@@ -1,0 +1,117 @@
+.bg-general {
+    background-color: #f8f9fc; /* Fondo gris claro */
+    padding: 5px;
+    min-height: 10vh;
+    display: flex;
+    align-items: center;
+    padding-top: 0px; /* Reducir margen superior */
+}
+
+.content-wrapper {
+    background-color: #ffffff; /* Fondo blanco para el contenedor */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Ajusta el ancho según tus necesidades */
+    max-width: 1200px; /* Ancho máximo */
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0056b3; /* Color azul similar al de tu captura */
+    margin-bottom: 20px;
+}
+
+.filters-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date-inputs input[type="text"] {
+    width: auto;
+}
+
+.search-btn {
+    padding: 6px 12px;
+}
+
+.export-btn {
+    white-space: nowrap;
+}
+
+.custom-table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.custom-table th, .custom-table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.pagination-controls select,
+.pagination-controls span,
+.pagination-controls button {
+    margin-right: 8px;
+}
+
+/* Estilos para los badges de estatus */
+.badge {
+    padding: 5px 10px;
+    border-radius: 12px; /* Bordes redondeados */
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #fff; /* Color de texto blanco */
+    display: inline-block;
+    text-align: center;
+    min-width: 100px; /* Ancho mínimo para uniformidad */
+}
+
+/* Colores personalizados */
+.badge-iniciado {
+    background-color: #6c757d; /* Gris para 'Iniciado' */
+}
+
+.badge-asesor {
+    /*background-color: #28a745; Verde para 'Asignado a asesor' */
+    background-color: #ffc107; /* Verde para 'Asignado a asesor' */
+}
+
+.badge-pre-autorizado {
+    /*background-color: #ffc107; /* Amarillo para 'Trámite pre-autorizado' */
+    background-color: #ff8b07; /* Amarillo para 'Trámite pre-autorizado' */
+}
+
+.badge-rechazado {
+    background-color: #dc3545; /* Rojo para 'Documentos rechazados' */
+}
+
+.badge-finalizado {
+    /*background-color: #007bff; /* Azul para 'Finalizado' */
+    background-color: #28a745; /* Azul para 'Finalizado' */
+}
+.badge-cita{
+    background-color: #007bff;
+}
+.badge-cancelada{
+    background-color: #000000;
+}
+.contenedor-cuadro {
+    margin-top: 10px; /* Ajustar según sea necesario */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+

@@ -4,7 +4,7 @@
 
   <!-- ngFor para iterar sobre cada puente en bridgeRates -->
   <div *ngFor="let bridge of bridgesConfig" class=" p-4 mb-4 rounded shadow-sm">
-    <h3 class="text-Dark">Puente: {{ bridge.bridge_name }}</h3>
+    <h3 class="text-Dark">{{ bridge.bridge_name }}</h3>
 
     <div class="row mb-3">
       <div class="col-md-6">
@@ -17,16 +17,6 @@
       </div>
     </div>
 
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <label>Anualidad US</label>
-        <input [(ngModel)]="bridge.annual_fee_us" class="form-control" />
-      </div>
-      <div class="col-md-6">
-        <label>Renovación US</label>
-        <input [(ngModel)]="bridge.annual_renew_fee_us" class="form-control" />
-      </div>
-    </div>
   </div>
 
   <!-- Input para el Pago Mínimo fuera del ngFor -->

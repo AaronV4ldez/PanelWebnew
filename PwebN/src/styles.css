@@ -7,6 +7,11 @@
   justify-content: space-between; /* Ajusta los elementos para que no se amontonen */
   padding: 0; /* Elimina padding para evitar desbordamiento */
   overflow: auto; /* Permite scroll interno si es necesario */
+    padding: 5px;
+    min-height: 10vh;
+    display: flex;
+    align-items: center;
+    padding-top: 0px; /* Reducir margen superior */
 }
 html, body {
   margin: 0; /* Elimina márgenes por defecto */
