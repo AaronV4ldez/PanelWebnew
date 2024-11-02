@@ -34,7 +34,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalTitle">Video</h5>
+          <h5 class="modal-title" id="modalTitle">Agregar Video</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -46,6 +46,14 @@
             <div class="mb-3">
               <label for="urlInput" class="form-label">URL</label>
               <input type="url" id="urlInput" class="form-control" formControlName="url" required />
+            </div>
+            <div class="mb-3">
+              <label for="bridgeInput" class="form-label">Selecciona el Puente</label>
+              <select id="bridgeInput" class="form-control" formControlName="bridge_id" required>
+                <option [value]="1">Puente Zaragoza</option>
+                <option [value]="2">Puente Lerdo</option>
+                <option [value]="4">Puente Paso del Norte</option>
+              </select>
             </div>
           </form>
         </div>
@@ -60,6 +68,7 @@
       </div>
     </div>
   </div>
+  
 
   <!-- Modal de aviso -->
   <div class="modal fade" id="avisoModal" tabindex="-1" aria-labelledby="avisoModalTitle" aria-hidden="true">

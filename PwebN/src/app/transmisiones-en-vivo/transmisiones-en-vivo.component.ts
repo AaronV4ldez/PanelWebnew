@@ -29,8 +29,10 @@ export class TransmisionesEnVivoComponent implements OnInit {
     // Definir el formulario sin la validación de la URL
     this.publicidadForm = this.fb.group({
       nombreVideo: ['', Validators.required],
-      url: ['', Validators.required] // Solo se requiere el campo, sin validación de patrón
+      url: ['', Validators.required],
+      bridge_id: ['', Validators.required]  // Agregar bridge_id aquí en el FormGroup
     });
+    
   }
 
   ngOnInit(): void {
@@ -58,24 +60,25 @@ export class TransmisionesEnVivoComponent implements OnInit {
   // Función para agregar un nuevo video
   agregarVideo(): void {
     if (this.publicidadForm.valid) {
-      const { nombreVideo, url } = this.publicidadForm.value;
-
+      const { nombreVideo, url, bridge_id } = this.publicidadForm.value;
+  
       // Formato del iframe con la URL del video
       const iframeUrl = `<iframe src="${url}" style="border:none; overflow:hidden; width:560px; height:315px" allowfullscreen></iframe>`;
-
+  
       // Construir la URL para la solicitud POST
       const apiUrl = `https://apisprueba.fpfch.gob.mx/api/v1/panel/mkt/livecam/`;
       const body = {
-        cam_title: nombreVideo, // Valor del formulario
-        cam_frame: iframeUrl // URL con el iframe agregado
+        cam_title: nombreVideo,      // Título del video
+        cam_frame: iframeUrl,        // URL del video en iframe
+        bridge_id: parseInt(bridge_id, 10)  // Convertir bridge_id a número entero
       };
-
+  
       // Agregar el API key en los encabezados
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${this.token}`,
         'Content-Type': 'application/json'
       });
-
+  
       // Realizar la solicitud POST
       this.http.post(apiUrl, body, { headers }).subscribe(
         response => {
@@ -92,6 +95,8 @@ export class TransmisionesEnVivoComponent implements OnInit {
       console.log('El formulario no es válido:', this.publicidadForm.value);
     }
   }
+  
+  
 
   // Función para eliminar video usando el entry_id almacenado
   eliminarVideo(): void {
