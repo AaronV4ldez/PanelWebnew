@@ -1,4 +1,3 @@
-// src/app/parametros-de-cobro/parametros-de-cobro.component.ts
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -20,9 +19,17 @@ export class ParametrosDeCobroComponent implements OnInit {
   ngOnInit(): void {
     // Realiza la solicitud a la API
     this.http.get<any>(this.apiUrl).subscribe(data => {
-      // Almacena los datos recibidos de la API
-      this.bridgesConfig = data.bridgesConfig; // Datos de los puentes
-      this.prepayMinimumAmount = data.globalConfig.prepay_minimum_amount; // Pago mínimo
+      this.bridgesConfig = data.bridgesConfig.map((bridge: any) => {
+        // Realiza el split en prepay_amounts y filtra valores no numéricos o "0"
+        bridge.prepayOptions = bridge.prepay_amounts
+          .split(',')
+          .filter((amount: string) => amount !== "0");
+
+        return bridge;
+      });
+
+      // Configura el valor mínimo de prepay
+      this.prepayMinimumAmount = data.globalConfig.prepay_minimum_amount;
     });
   }
 }
