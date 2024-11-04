@@ -8,7 +8,7 @@
             <div class="date-inputs d-flex">
                 <input type="text" class="form-control me-2" placeholder="Desde" onfocus="(this.type='date')">
                 <input type="text" class="form-control me-2" placeholder="Hasta" onfocus="(this.type='date')">
-                <button class="btn btn-primary search-btn"><i class="fa fa-search"></i></button>
+                <button class="btn btn-primary search-btn" (click)="openFiltroModal()"><i class="fa fa-search"></i></button>
             </div>
             <button class="btn btn-outline-primary export-btn" (click)="exportarExcel()">
                 <i class="fa fa-download"></i> Exportar
@@ -43,7 +43,7 @@
                             'badge-cancelada': tramite.estatus === 'Proceso Cancelado'
                         }">{{ tramite.estatus }}</span>
                     </td>                    
-                    <td>{{ tramite.ultimoMovimiento }}</td>
+                    <td>{{ tramite.ultimoMovimiento | date: 'dd MMM yyyy hh:mm a'  }}</td>
                     <td><button class="btn btn-link"><i class="fa fa-eye"></i></button></td>
                 </tr>
             </tbody>
@@ -73,3 +73,60 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="filtroTramiteModal" tabindex="-1" aria-labelledby="filtroTramiteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filtroTramiteModalLabel">Filtrar trámite</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="filtroForm">
+            <h4>Datos de trámite</h4>
+            
+            <!-- Buscar por usuario -->
+            <div class="mb-3">
+              <label for="usuario" class="form-label">Buscar usuario</label>
+              <input type="text" id="usuario" formControlName="usuario" class="form-control" placeholder="Buscar usuario">
+            </div>
+            
+            <!-- Tipo de trámite -->
+            <div class="mb-3">
+              <label for="tipoTramite" class="form-label">Tipo de trámite</label>
+              <select id="tipoTramite" formControlName="tipoTramite" class="form-select">
+                <option value="">Selecciona un tipo</option>
+                <option value="Solicitud de inscripción">Solicitud de inscripcion</option>
+                <option value="Inscripción en otro puente">Inscripción en otro puente</option>
+                <option value="Solicitud de cambio de vehículo">Solicitud de cambio de vehículo</option>
+                <option value="Solicitud de transferencia de saldo">Solicitud de transferencia de saldo</option>
+                <option value="Solicitud de baja de vehículo">Solicitud de baja de vehículo</option>
+                <option value="Registro de vehículo adicional">Registro de vehículo adicional</option>
+              </select>
+            </div>
+            
+            <!-- Estatus -->
+            <div class="mb-3">
+              <label for="estatus" class="form-label">Estatus</label>
+              <select id="estatus" formControlName="estatus" class="form-select">
+                <option value="">Selecciona un estatus</option>
+                <option value="Iniciado">Iniciado</option>
+                <option value="Asignado a asesor">Asignado a asesor</option>
+                <option value="Trámite pre-autorizado">Trámite pre-autorizado</option>
+                <option value="Documentos rechazados">Documentos rechazados</option>
+                <option value="Finalizado">Finalizado</option>
+                <option value="Cita Agendada">Cita Agendada</option>
+                <option value="Proceso Cancelado">Proceso Cancelado</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="onLimpiar()">Limpiar</button>
+          <button type="button" class="btn btn-primary" (click)="onBuscar()">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
