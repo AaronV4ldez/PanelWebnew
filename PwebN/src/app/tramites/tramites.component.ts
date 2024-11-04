@@ -39,11 +39,31 @@ export class TramitesComponent implements OnInit {
   }
 
   exportarExcel(): void {
-    const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.tramites);
-    const libro: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Trámites');
-    
-    const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
-    saveAs(new Blob([archivo], { type: 'application/octet-stream' }), 'tramites.xlsx');
+    const nombreArchivo = prompt("Ingrese el nombre del archivo:", "tramites");
+  
+    if (nombreArchivo) {
+      // Crear un nuevo arreglo con los nombres de columnas personalizados
+      const tramitesConEncabezados = this.tramites.map(tramite => ({
+        "Folio": tramite.folio,
+        "Nombre de usuario": tramite.nombreUsuario,
+        "Trámite": tramite.eltramite,
+        "Estatus": tramite.estatus,
+        "Último movimiento": tramite.ultimoMovimiento
+      }));
+  
+      // Generar hoja de trabajo y libro con los nuevos encabezados
+      const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(tramitesConEncabezados);
+      const libro: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Trámites');
+  
+      // Escribir y guardar el archivo Excel
+      const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
+      saveAs(new Blob([archivo], { type: 'application/octet-stream' }), `${nombreArchivo}.xlsx`);
+    } else {
+      console.log("Exportación cancelada");
+    }
   }
+  
+  
+  
 }
