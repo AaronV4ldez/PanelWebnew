@@ -6,35 +6,35 @@
   <div class="content-wrapper contenedor-cuadro">
     <h2>Usuarios de app móvil</h2>
     <div class="table-controls">
-      <input type="text" placeholder="Buscar..." class="search-input" />
-      <button class="export-button">Exportar</button>
-    </div>
-    
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre de usuario</th>
-          <th>Correo electrónico</th>
-          <th>Teléfono</th>
-          <th>SENTRI</th>
-          <th>TAGs</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let usuario of usuarios | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
-          <td>{{ usuario.fullname }}</td>
-          <td>{{ usuario.userlogin }}</td>
-          <td>{{ usuario.phone }}</td>
-          <td>{{ usuario.sentri_number || 'N/A' }}</td>
-          <td>{{ usuario.usertype }}</td>
-          <td>
-            <button class="action-button view"><i class="fa fa-eye"></i></button>
-            <button class="action-button delete"><i class="fa fa-trash"></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        <input type="text" placeholder="Buscar..." class="search-input" [(ngModel)]="searchTerm" />
+        <button class="export-button">Exportar</button>
+      </div>
+      
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre de usuario</th>
+            <th>Correo electrónico</th>
+            <th>Teléfono</th>
+            <th>SENTRI</th>
+            <th>TAGs</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of filteredUsuarios | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+            <td>{{ usuario.fullname }}</td>
+            <td>{{ usuario.userlogin }}</td>
+            <td>{{ usuario.phone }}</td>
+            <td>{{ usuario.sentri_number || 'N/A' }}</td>
+            <td>{{ usuario.usertype }}</td>
+            <td>
+              <button class="action-button view"><i class="fa fa-eye"></i></button>
+              <button class="action-button delete"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
     <!-- Controles de paginación -->
     <div class="pagination-controls">

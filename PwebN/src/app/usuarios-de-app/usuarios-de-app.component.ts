@@ -11,10 +11,7 @@ export class UsuariosDeAppComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 9;
   Math = Math; // Para usar Math en la plantilla
-
-  // Íconos de Font Awesome como cadenas de texto
-  previousIcon = "<i class='fa fa-angle-left'></i>";
-  nextIcon = "<i class='fa fa-angle-right'></i>";
+  searchTerm: string = ''; // Nueva variable para la búsqueda
 
   constructor(private http: HttpClient) {}
 
@@ -40,5 +37,14 @@ export class UsuariosDeAppComponent implements OnInit {
 
   cambiarPagina(pagina: number) {
     this.currentPage = pagina;
+  }
+
+  // Método para filtrar los usuarios
+  get filteredUsuarios() {
+    return this.usuarios.filter(usuario => 
+      usuario.fullname.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      usuario.userlogin.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      usuario.phone.includes(this.searchTerm)
+    );
   }
 }
