@@ -1,5 +1,51 @@
 <app-header></app-header>
 <app-sidebar></app-sidebar>
-<div class="bg-general"><!--Div bg general inicio-->
+<div class="bg-general">
+  <div class="content-wrapper contenedor-cuadro">
+    <h2>Usuarios de panel web</h2>
+    <div class="table-controls">
+      <input type="text" placeholder="Buscar..." class="search-input" [(ngModel)]="searchTerm" />
+      <button class="export-button" (click)="exportarExcel()">Exportar</button>
+    </div>
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre de usuario</th>
+          <th>Correo electrónico</th>
+          <th>Teléfono</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of filteredUsuarios | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+          <td>{{ usuario.fullname }}</td>
+          <td>{{ usuario.userlogin }}</td>
+          <td>{{ usuario.phone }}</td>
+          <td>{{ obtenerRol(usuario.usertype) }}</td>
+          <td>
+            <button class="action-button edit"><i class="fa fa-pencil"></i></button>
+            <button class="action-button delete"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-</div><!--Div gb general fin-->
+    <!-- Controles de paginación -->
+    <div class="pagination-controls">
+      <label for="itemsPerPage">Items por página</label>
+      <select [(ngModel)]="itemsPerPage" id="itemsPerPage">
+        <option *ngFor="let num of [5, 8, 12, 15]" [value]="num">{{ num }}</option>
+      </select>
+      <p>Mostrando {{(currentPage - 1) * itemsPerPage + 1}} - {{ Math.min((currentPage * itemsPerPage), usuarios.length) }} de {{usuarios.length}} items</p>
+      
+      <!-- Pagination controls con etiquetas de solo flechas -->
+      <pagination-controls 
+        (pageChange)="cambiarPagina($event)"
+        previousLabel="&nbsp;" 
+        nextLabel="&nbsp;">
+      </pagination-controls>
+    </div>
+  </div>
+</div>

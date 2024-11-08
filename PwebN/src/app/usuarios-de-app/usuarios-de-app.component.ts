@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-usuarios-de-app',
@@ -46,5 +48,31 @@ export class UsuariosDeAppComponent implements OnInit {
       usuario.userlogin.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       usuario.phone.includes(this.searchTerm)
     );
+  }
+
+  exportarExcel(): void {
+    const nombreArchivo = prompt("Ingrese el nombre del archivo:", "usuarios");
+  
+    if (nombreArchivo) {
+      // Define los datos y encabezados a exportar
+      const usuariosConEncabezados = this.usuarios.map(usuario => ({
+        "Nombre de usuario": usuario.fullname,
+        "Correo electrónico": usuario.userlogin,
+        "Teléfono": usuario.phone,
+        "SENTRI": usuario.sentri_number || 'N/A',
+        "TAGs": usuario.usertype
+      }));
+  
+      // Crea la hoja de trabajo y el libro
+      const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(usuariosConEncabezados);
+      const libro: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Usuarios');
+  
+      // Genera el archivo Excel y lo descarga
+      const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
+      saveAs(new Blob([archivo], { type: 'application/octet-stream' }), `${nombreArchivo}.xlsx`);
+    } else {
+      console.log("Exportación cancelada");
+    }
   }
 }
