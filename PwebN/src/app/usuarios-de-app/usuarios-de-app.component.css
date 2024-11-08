@@ -1,0 +1,114 @@
+
+  
+  /* Estilos generales del contenedor */
+  .container {
+    padding: 20px;
+  }
+  
+  /* Encabezado */
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  /* Controles de la tabla */
+  .table-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .search-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .export-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Estilos de la tabla */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+  }
+  
+  .action-button {
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0 2px;
+    border-radius: 4px;
+  }
+  
+  .action-button.view {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .action-button.delete {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  /* Controles de paginación */
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .pagination-controls select,
+  .pagination-controls p {
+    margin: 0 10px;
+  }
+
+  .content-wrapper {
+    background-color: #ffffff; /* Fondo blanco para el contenedor */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Ajusta el ancho según tus necesidades */
+    max-width: 1200px; /* Ancho máximo */
+}
+.contenedor-cuadro {
+    margin-top: 10px; /* Ajustar según sea necesario */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.pagination-controls .pagination-previous,
+.pagination-controls .pagination-next {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-controls .pagination-previous::before,
+.pagination-controls .pagination-next::after {
+  content: ''; /* Elimina el texto */
+}
+
+.pagination-controls .pagination-previous i,
+.pagination-controls .pagination-next i {
+  font-size: 1.5rem; /* Ajusta el tamaño del ícono de flecha */
+}

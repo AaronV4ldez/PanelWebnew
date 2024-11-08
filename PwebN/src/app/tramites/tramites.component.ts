@@ -146,7 +146,7 @@ export class TramitesComponent implements OnInit {
     const fechaParte = partes[0]; // `YYYY-MM-DD`
     return new Date(fechaParte); // Crear un objeto `Date` solo con la fecha
   }
-  
+   
   
 
 normalizeString(str: string): string {
