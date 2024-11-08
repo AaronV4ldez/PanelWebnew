@@ -1,18 +1,50 @@
 <app-header></app-header>
-<router-outlet></router-outlet>
 <app-sidebar></app-sidebar>
 
 <div class="bg-general">
-  <!-- Contenido del Dashboard -->
   <div class="container mt-5">
-    <!-- Tu contenido aquí -->
-  </div>
+    <!-- Contenedor para Filtros de Fecha y Contadores de Usuarios -->
+    <div class="top-section">
+      <!-- Filtros de Fecha encima de los contadores -->
+      <div class="date-filters d-flex gap-3 justify-content-start mb-3">
+        <div class="date-picker">
+          <label>Desde:</label>
+          <input type="date" [(ngModel)]="startDate">
+        </div>
+        <div class="date-picker">
+          <label>Hasta:</label>
+          <input type="date" [(ngModel)]="endDate">
+        </div>
+      </div>
 
+      <!-- Contadores de Usuarios -->
+      <div class="user-counters d-flex gap-3">
+        <a class="item" routerLink="/usuarios-de-panel-web">
+        <div class="counter-box">
+          <i class="fa fa-desktop"></i>
+          <h3>Usuarios web</h3>
+          <p>{{ webUserCount }} Usuarios</p>
+        </div>
+        </a>
+        <a class="item" routerLink="/usuarios-de-app-movil">
+        <div class="counter-box">
+          <i class="fa fa-mobile-alt"></i>
+          <h3>Usuarios app</h3>
+          <p>{{ appUserCount }} Usuarios</p>
+        </div>
+        </a>
+      </div>
+    </div>
 
-  <div style="margin-left: 260px; padding: 20px;">
-    <router-outlet></router-outlet>
+    <!-- Botones de Acción en la Parte Superior Derecha -->
+    <div class="action-buttons d-flex gap-3 justify-content-end mt-4">
+      <button class="action-btn recargas"><i class="fa fa-dollar-sign"></i> Recargas</button>
+      <button class="action-btn saldo"><i class="fa fa-credit-card"></i> Saldo Telepeaje</button>
+      <button class="action-btn info"><i class="fa fa-gem"></i> Info Línea Exprés</button>
+    </div>
   </div>
 </div>
+
 
 <!-- Modal para Ambiente de Pruebas -->
 <div class="modal fade" id="pruebaModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">

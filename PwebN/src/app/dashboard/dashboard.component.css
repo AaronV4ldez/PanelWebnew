@@ -15,5 +15,121 @@
   padding-top: 0; /* Eliminar márgenes */
   /*padding: 0; Ajustar el padding si es necesario */
 }
+/* Contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
+/* Sección Superior para Alinear los Elementos */
+.top-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
+/* Filtros de Fecha */
+.date-filters {
+  display: flex;
+  gap: 20px;
+}
+
+.date-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-picker label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Contadores de Usuarios */
+.user-counters {
+  display: flex;
+  gap: 20px;
+}
+
+.counter-box {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 180px;
+}
+
+.counter-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.counter-box i {
+  font-size: 36px;
+  color: #00aaff;
+}
+
+.counter-box h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 10px;
+}
+
+.counter-box p {
+  font-size: 22px;
+  font-weight: bold;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* Botones de Acciones en la Parte Superior Derecha */
+.action-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.action-btn {
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-btn i {
+  font-size: 18px;
+}
+
+.action-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.recargas {
+  background: linear-gradient(135deg, #ff4081, #ff6e8d);
+}
+
+.saldo {
+  background: linear-gradient(135deg, #1976d2, #2196f3);
+}
+
+.info {
+  background: linear-gradient(135deg, #8e24aa, #9c27b0);
+}
+
+/* Ajustes de Espaciado y Tamaño */
+.date-picker input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
