@@ -54,7 +54,7 @@ export class UsuariosDeAppComponent implements OnInit {
   }
 
   exportarExcel(): void {
-    const nombreArchivo = prompt("Ingrese el nombre del archivo:", "usuarios");
+    const nombreArchivo = prompt("Ingrese el nombre del archivo:", "usuarios_app_movil");
   
     if (nombreArchivo) {
       const usuariosConEncabezados = this.usuarios.map(usuario => ({

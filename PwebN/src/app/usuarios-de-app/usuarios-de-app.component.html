@@ -6,7 +6,9 @@
     <h2>Usuarios de app móvil</h2>
     <div class="table-controls">
         <input type="text" placeholder="Buscar..." class="search-input" [(ngModel)]="searchTerm" />
-        <button class="export-button" (click)="exportarExcel()">Exportar</button>
+        <button class="btn btn-outline-primary export-btn" (click)="exportarExcel()">
+          <i class="fa fa-download"></i> Exportar
+      </button>
     </div>
       
     <table class="table">
