@@ -112,3 +112,29 @@
 .pagination-controls .pagination-next i {
   font-size: 1.5rem; /* Ajusta el tamaño del ícono de flecha */
 }
+/* Estilos para el modal de detalles del usuario */
+.modal-body .container {
+  font-size: 14px;
+}
+
+.modal-body .row > div {
+  padding: 10px 0;
+}
+
+.modal-body .row > div strong {
+  display: block;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.modal-header, .modal-footer {
+  border: none;
+}
+
+.modal-footer button {
+  border-radius: 10px;
+  background-color: #007bff;
+  border-color: #007bff;
+  font-weight: bold;
+}

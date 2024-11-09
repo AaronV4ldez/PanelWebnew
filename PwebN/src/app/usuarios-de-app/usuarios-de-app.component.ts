@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
+declare var bootstrap: any; // Declaración para usar Bootstrap
+
 @Component({
   selector: 'app-usuarios-de-app',
   templateUrl: './usuarios-de-app.component.html',
@@ -10,6 +12,7 @@ import { saveAs } from 'file-saver';
 })
 export class UsuariosDeAppComponent implements OnInit {
   usuarios: any[] = [];
+  usuarioSeleccionado: any = null; // Usuario seleccionado para el modal
   currentPage: number = 1;
   itemsPerPage: number = 9;
   Math = Math; // Para usar Math en la plantilla
@@ -54,25 +57,31 @@ export class UsuariosDeAppComponent implements OnInit {
     const nombreArchivo = prompt("Ingrese el nombre del archivo:", "usuarios");
   
     if (nombreArchivo) {
-      // Define los datos y encabezados a exportar
       const usuariosConEncabezados = this.usuarios.map(usuario => ({
         "Nombre de usuario": usuario.fullname,
         "Correo electrónico": usuario.userlogin,
         "Teléfono": usuario.phone,
         "SENTRI": usuario.sentri_number || 'N/A',
-        "TAGs": usuario.usertype
       }));
   
-      // Crea la hoja de trabajo y el libro
       const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(usuariosConEncabezados);
       const libro: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Usuarios');
   
-      // Genera el archivo Excel y lo descarga
       const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
       saveAs(new Blob([archivo], { type: 'application/octet-stream' }), `${nombreArchivo}.xlsx`);
     } else {
       console.log("Exportación cancelada");
+    }
+  }
+
+  // Mostrar el modal con los detalles del usuario seleccionado
+  mostrarDetalle(usuario: any) {
+    this.usuarioSeleccionado = usuario; // Asigna el usuario seleccionado
+    const modalElement = document.getElementById('detalleModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
     }
   }
 }
