@@ -1,7 +1,6 @@
 <div class="container mt-4">
   <h2 class="mb-4">Parámetros de Cobro</h2>
 
-  <!-- ngFor para iterar sobre cada puente en bridgeRates -->
   <div *ngFor="let bridge of bridgesConfig" class="p-4 mb-4 rounded shadow-sm">
     <h3 class="text-dark">{{ bridge.bridge_name }}</h3>
 
@@ -16,7 +15,6 @@
       </div>
     </div>
 
-    <!-- Dropdown para prepay_amounts si tiene valores distintos de "0" -->
     <div *ngIf="bridge.prepayOptions && bridge.prepayOptions.length > 0" class="row mb-3">
       <div class="col-md-6">
         <label>Montos de Prepago</label>
@@ -29,10 +27,12 @@
     </div>
   </div>
 
-  <!-- Input para el Pago Mínimo fuera del ngFor -->
   <div class="p-4 rounded shadow-sm">
     <h3 class="text-dark">Parámetros Telepeaje</h3>
     <label>Pago mínimo</label>
     <input [(ngModel)]="prepayMinimumAmount" class="form-control" />
   </div>
+
+  <!-- Botón para guardar la información -->
+  <button class="btn btn-primary mt-4" (click)="guardarInformacion()">Guardar información</button>
 </div>
