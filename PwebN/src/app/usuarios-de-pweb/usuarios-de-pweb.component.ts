@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
+declare var bootstrap: any; // Para usar Bootstrap JS en el componente
+
 @Component({
   selector: 'app-usuarios-de-pweb',
   templateUrl: './usuarios-de-pweb.component.html',
@@ -10,6 +12,8 @@ import { saveAs } from 'file-saver';
 })
 export class UsuariosDePwebComponent implements OnInit {
   usuarios: any[] = [];
+  usuarioSeleccionado: any = {}; // Usuario actualmente seleccionado para edición
+  verificarPassword: string = ''; // Campo para verificar la contraseña
   currentPage: number = 1;
   itemsPerPage: number = 8;
   searchTerm: string = '';
@@ -49,7 +53,6 @@ export class UsuariosDePwebComponent implements OnInit {
     );
   }
 
-  // Asigna el rol basado en el tipo de usuario
   obtenerRol(usertype: number): string {
     switch (usertype) {
       case 1: return 'Usuario';
@@ -58,6 +61,27 @@ export class UsuariosDePwebComponent implements OnInit {
       case 4: return 'Super Admin';
       case 5: return 'Comunicación Social';
       default: return 'Usuario';
+    }
+  }
+
+  // Abre el modal de edición con los datos del usuario seleccionado
+  abrirModalEdicion(usuario: any) {
+    this.usuarioSeleccionado = { ...usuario }; // Copia los datos del usuario seleccionado
+    const modalElement = document.getElementById('editUserModal');
+    if (modalElement) {
+      const modalInstance = new bootstrap.Modal(modalElement);
+      modalInstance.show();
+    }
+  }
+
+  // Confirma la edición del usuario
+  confirmarEdicion() {
+    // Aquí puedes agregar la lógica para actualizar los datos en la base de datos si fuera necesario
+    console.log('Usuario editado:', this.usuarioSeleccionado);
+    const modalElement = document.getElementById('editUserModal');
+    if (modalElement) {
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      modalInstance.hide();
     }
   }
 
