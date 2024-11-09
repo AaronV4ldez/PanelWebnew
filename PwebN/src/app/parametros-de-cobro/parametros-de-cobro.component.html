@@ -15,14 +15,36 @@
       </div>
     </div>
 
-    <div *ngIf="bridge.prepayOptions && bridge.prepayOptions.length > 0" class="row mb-3">
-      <div class="col-md-6">
+    <!-- Tabla para mostrar y agregar Montos de Prepago -->
+    <div *ngIf="bridge.prepayOptions" class="row mb-3">
+      <div class="col-md-12">
         <label>Montos de Prepago</label>
-        <select class="form-control" [(ngModel)]="bridge.selectedPrepayAmount">
-          <option *ngFor="let amount of bridge.prepayOptions" [value]="amount">
-            {{ amount }}
-          </option>
-        </select>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Monto</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Mostrar valores existentes -->
+            <tr *ngFor="let amount of bridge.prepayOptions; let i = index">
+              <td>{{ amount }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="eliminarMonto(bridge, i)">Eliminar</button>
+              </td>
+            </tr>
+            <!-- Agregar nuevo monto -->
+            <tr>
+              <td>
+                <input [(ngModel)]="bridge.nuevoMonto" class="form-control" placeholder="Nuevo monto" type="number" />
+              </td>
+              <td>
+                <button class="btn btn-primary btn-sm" (click)="agregarMonto(bridge)">+</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -35,4 +57,22 @@
 
   <!-- Botón para guardar la información -->
   <button class="btn btn-primary mt-4" (click)="guardarInformacion()">Guardar información</button>
+</div>
+
+<!-- Modal de confirmación de guardado -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Parámetros modificados correctamente.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="cerrarModalExito()">Aceptar</button>
+      </div>
+    </div>
+  </div>
 </div>
