@@ -1,5 +1,52 @@
 <app-header></app-header>
 <app-sidebar></app-sidebar>
 <div class="bg-general">
+  <div class="content-wrapper contenedor-cuadro">
+    <h3 class="title">LOGS</h3>
+    <div class="table-controls d-flex justify-content-between align-items-center mb-3">
+      <input type="text" placeholder="Buscar..." class="form-control me-2 search-input" [(ngModel)]="searchTerm" />
+      <button class="btn btn-outline-primary export-btn" (click)="exportarExcel()">
+        <i class="fa fa-download"></i> Exportar
+      </button>
+    </div>
     
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Evento</th>
+          <th>Comentarios</th>
+          <th>Fecha y hora</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of filteredLogs | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+          <td>{{ log.event_name }}</td>
+          <td>{{ log.log_comments }}</td>
+          <td>{{ log.event_date_time }}</td>
+          <td class="text-center">
+            <button class="btn btn-outline-secondary btn-sm"><i class="fa fa-eye"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Controles de paginación -->
+    <div class="pagination-controls d-flex justify-content-between align-items-center mt-3">
+      <div>
+        <label for="itemsPerPage">Items por página</label>
+        <select [(ngModel)]="itemsPerPage" id="itemsPerPage" class="form-select ms-2">
+          <option *ngFor="let num of [5, 8, 12, 15]" [value]="num">{{ num }}</option>
+        </select>
+      </div>
+      <p>Mostrando {{(currentPage - 1) * itemsPerPage + 1}} - {{ Math.min((currentPage * itemsPerPage), logs.length) }} de {{logs.length}} items</p>
+      
+      <!-- Pagination controls con etiquetas de solo flechas -->
+      <pagination-controls 
+        (pageChange)="cambiarPagina($event)"
+        previousLabel="&nbsp;" 
+        nextLabel="&nbsp;">
+      </pagination-controls>
+    </div>
+  </div>
 </div>

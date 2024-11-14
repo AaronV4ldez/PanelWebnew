@@ -1,0 +1,15 @@
+.content-wrapper {
+    background-color: #ffffff; /* Fondo blanco para el contenedor */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Ajusta el ancho según tus necesidades */
+    max-width: 1200px; /* Ancho máximo */
+}
+.contenedor-cuadro {
+    margin-top: 10px; /* Ajustar según sea necesario */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
