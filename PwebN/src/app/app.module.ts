@@ -23,6 +23,7 @@ import { ConfigurarPublicidadComponent } from './configurar-publicidad/configura
 import { TramitesComponent } from './tramites/tramites.component';
 import { UsuariosDePwebComponent } from './usuarios-de-pweb/usuarios-de-pweb.component';
 import { UsuariosDeAppComponent } from './usuarios-de-app/usuarios-de-app.component';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { UsuariosDeAppComponent } from './usuarios-de-app/usuarios-de-app.compon
     ConfigurarPublicidadComponent,
     TramitesComponent,
     UsuariosDePwebComponent,
-    UsuariosDeAppComponent
+    UsuariosDeAppComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,

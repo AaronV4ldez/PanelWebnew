@@ -10,6 +10,7 @@ import { ConfiguracionDePublicidadComponent } from './configuracion-de-publicida
 import { TramitesComponent } from './tramites/tramites.component';
 import { UsuariosDePwebComponent } from './usuarios-de-pweb/usuarios-de-pweb.component';
 import { UsuariosDeAppComponent } from './usuarios-de-app/usuarios-de-app.component';
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'configuracion-de-publicidad', component: ConfiguracionDePublicidadComponent},
   { path: 'tramites', component: TramitesComponent},
   { path: 'usuarios-de-panel-web', component: UsuariosDePwebComponent},
-  { path: 'usuarios-de-app-movil', component: UsuariosDeAppComponent}
+  { path: 'usuarios-de-app-movil', component: UsuariosDeAppComponent},
+  { path: 'reports', component: ReportsComponent}
 
 ];
 

@@ -28,7 +28,7 @@
           <td>{{ obtenerRol(usuario.usertype) }}</td>
           <td>
             <button class="action-button edit" (click)="abrirModalEdicion(usuario)"><i class="fa fa-pencil"></i></button>
-            <button class="action-button delete"><i class="fa fa-trash"></i></button>
+            <button class="action-button delete" (click)="abrirModalConfirmacionEliminar(usuario)"><i class="fa fa-trash"></i></button>
           </td>
         </tr>
       </tbody>
@@ -96,6 +96,42 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
         <button type="button" class="btn btn-primary" (click)="confirmarEdicion()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal de Confirmación de Eliminación -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Seguro que desea eliminar al usuario con ID "{{ usuarioSeleccionado.id }}"?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmarEliminacion()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmación de Éxito -->
+<div class="modal fade" id="deleteSuccessModal" tabindex="-1" aria-labelledby="deleteSuccessModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteSuccessModalLabel">Eliminación Exitosa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        El usuario ha sido eliminado correctamente.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>

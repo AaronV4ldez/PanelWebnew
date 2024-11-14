@@ -55,6 +55,10 @@ export class ParametrosDeCobroComponent implements OnInit {
     this.requestsCompleted = 0; // Reiniciar el contador cada vez que se guarda la información
 
     this.bridgesConfig.forEach((bridge, index, array) => {
+      const prepayAmountsValue = bridge.prepayOptions.length > 0 
+        ? bridge.prepayOptions.join(',') // Si hay valores, los une con comas
+        : "0"; // Si está vacío, usa "0"
+
       const payload = {
         entry_id: bridge.entry_id,
         bridge_name: bridge.bridge_name,
@@ -62,7 +66,7 @@ export class ParametrosDeCobroComponent implements OnInit {
         annual_renew_fee_mx: bridge.annual_renew_fee_mx,
         annual_fee_us: 0,
         annual_renew_fee_us: 0,
-        prepay_amounts: bridge.prepayOptions.join(','),  // Convertimos a una cadena separada por comas
+        prepay_amounts: prepayAmountsValue, // Asigna el valor procesado aquí
         is_billable: bridge.is_billable || 0,
         has_cams: bridge.has_cams || 1
       };

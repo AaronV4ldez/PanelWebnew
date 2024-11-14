@@ -31,7 +31,7 @@
             <tr *ngFor="let amount of bridge.prepayOptions; let i = index">
               <td>{{ amount }}</td>
               <td>
-                <button class="btn btn-danger btn-sm" (click)="eliminarMonto(bridge, i)">Eliminar</button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarMonto(bridge, i)"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
             <!-- Agregar nuevo monto -->

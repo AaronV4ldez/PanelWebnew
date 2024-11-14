@@ -12,12 +12,14 @@ declare var bootstrap: any; // Para usar Bootstrap JS en el componente
 })
 export class UsuariosDePwebComponent implements OnInit {
   usuarios: any[] = [];
-  usuarioSeleccionado: any = {}; // Usuario actualmente seleccionado para edición
+  usuarioSeleccionado: any = {}; // Usuario actualmente seleccionado para edición o eliminación
   verificarPassword: string = ''; // Campo para verificar la contraseña
   currentPage: number = 1;
   itemsPerPage: number = 8;
   searchTerm: string = '';
   Math = Math;
+
+  private token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IEdhcmNpYSIsImV4cCI6MTcwNDkwMTM1N30.ORsWQWxVBCjlhItaZ1e63qBIqEL1LFOjKuydoEaDBZg';
 
   constructor(private http: HttpClient) {}
 
@@ -28,7 +30,7 @@ export class UsuariosDePwebComponent implements OnInit {
   obtenerUsuarios() {
     const url = 'https://apisprueba.fpfch.gob.mx/api/v1/panel/users/web-users';
     const headers = new HttpHeaders({
-      'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IEdhcmNpYSIsImV4cCI6MTcwNDkwMTM1N30.ORsWQWxVBCjlhItaZ1e63qBIqEL1LFOjKuydoEaDBZg`
+      'Authorization': this.token
     });
 
     this.http.get<any[]>(url, { headers }).subscribe(
@@ -76,12 +78,54 @@ export class UsuariosDePwebComponent implements OnInit {
 
   // Confirma la edición del usuario
   confirmarEdicion() {
-    // Aquí puedes agregar la lógica para actualizar los datos en la base de datos si fuera necesario
     console.log('Usuario editado:', this.usuarioSeleccionado);
     const modalElement = document.getElementById('editUserModal');
     if (modalElement) {
       const modalInstance = bootstrap.Modal.getInstance(modalElement);
       modalInstance.hide();
+    }
+  }
+
+  abrirModalConfirmacionEliminar(usuario: any) {
+    this.usuarioSeleccionado = usuario; // Establece el usuario seleccionado
+    const modalElement = document.getElementById('confirmDeleteModal');
+    if (modalElement) {
+      const confirmDeleteModal = new bootstrap.Modal(modalElement);
+      confirmDeleteModal.show();
+    }
+  }
+
+  confirmarEliminacion() {
+    const url = `https://apisprueba.fpfch.gob.mx/api/v1/panel/users/delete/${this.usuarioSeleccionado.id}`;
+    const headers = new HttpHeaders({
+      'Authorization': this.token
+    });
+
+    this.http.delete(url, { headers }).subscribe(
+      () => {
+        // Eliminar el usuario de la lista localmente
+        this.usuarios = this.usuarios.filter(u => u.id !== this.usuarioSeleccionado.id);
+        
+        // Cerrar el modal de confirmación
+        const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
+        if (confirmDeleteModal) {
+          confirmDeleteModal.hide();
+        }
+
+        // Mostrar el modal de éxito
+        this.mostrarModalExito();
+      },
+      (error) => {
+        console.error('Error al eliminar usuario:', error);
+      }
+    );
+  }
+
+  mostrarModalExito() {
+    const modalElement = document.getElementById('deleteSuccessModal');
+    if (modalElement) {
+      const deleteSuccessModal = new bootstrap.Modal(modalElement);
+      deleteSuccessModal.show();
     }
   }
 

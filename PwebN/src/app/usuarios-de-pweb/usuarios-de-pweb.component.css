@@ -100,3 +100,20 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+.modal-content {
+  border: none; /* Eliminar el borde del contenido del modal */
+}
+
+.modal-header{
+  border: none; /* Eliminar los bordes de cada sección */
+}
+.modal-body{
+  padding-bottom: 0;
+  padding-top: 0;
+}
+.modal-footer {
+  border: none; /* Eliminar los bordes de cada sección */
+  margin: 0;
+  padding-top: 0; /* Eliminar márgenes */
+  /*padding: 0; Ajustar el padding si es necesario */
+}
