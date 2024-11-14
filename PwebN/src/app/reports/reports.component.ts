@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-reports',
@@ -14,6 +15,7 @@ export class ReportsComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 8; // Items por página
   Math = Math; // Permite el uso de Math en el HTML
+  eventoSeleccionado: any = {}; // Evento seleccionado para mostrar en el modal
 
   private token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IFRlc3QiLCJleHAiOjE3Mjk3ODc3NjN9.T9xaWtCBSbaBC8dHBjT5_oUCIBDWSnZknSiibAgMDgQ';
 
@@ -59,7 +61,7 @@ export class ReportsComponent implements OnInit {
 
   // Exportar datos a Excel
   exportarExcel(): void {
-    const nombreArchivo = prompt("Ingrese el nombre del archivo:", "logs");
+    const nombreArchivo = prompt("Ingrese el nombre del archivo:", "Reportes_logs");
 
     if (nombreArchivo) {
       const logsConEncabezados = this.logs.map(log => ({
@@ -70,12 +72,22 @@ export class ReportsComponent implements OnInit {
 
       const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(logsConEncabezados);
       const libro: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Logs');
+      XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Reportes_logs');
 
       const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
       saveAs(new Blob([archivo], { type: 'application/octet-stream' }), `${nombreArchivo}.xlsx`);
     } else {
       console.log("Exportación cancelada");
+    }
+  }
+
+  // Abre el modal de detalles con el evento seleccionado
+  abrirModalDetalle(log: any): void {
+    this.eventoSeleccionado = log;
+    const modalElement = document.getElementById('detalleEventoModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
     }
   }
 }

@@ -2,7 +2,7 @@
 <app-sidebar></app-sidebar>
 <div class="bg-general">
   <div class="content-wrapper contenedor-cuadro">
-    <h3 class="title">LOGS</h3>
+    <h3 class="title">Logs de Eventos</h3>
     <div class="table-controls d-flex justify-content-between align-items-center mb-3">
       <input type="text" placeholder="Buscar..." class="form-control me-2 search-input" [(ngModel)]="searchTerm" />
       <button class="btn btn-outline-primary export-btn" (click)="exportarExcel()">
@@ -25,7 +25,9 @@
           <td>{{ log.log_comments }}</td>
           <td>{{ log.event_date_time }}</td>
           <td class="text-center">
-            <button class="btn btn-outline-secondary btn-sm"><i class="fa fa-eye"></i></button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="abrirModalDetalle(log)">
+                <i class="fa fa-eye"></i>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -47,6 +49,31 @@
         previousLabel="&nbsp;" 
         nextLabel="&nbsp;">
       </pagination-controls>
+    </div>
+  </div>
+
+  <!-- Modal de Detalles del Evento -->
+<div class="modal fade" id="detalleEventoModal" tabindex="-1" aria-labelledby="detalleEventoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detalleEventoModalLabel">Detalle de Evento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Evento:</strong> {{ eventoSeleccionado.event_name }}</p>
+          <p><strong>Fecha y hora:</strong> {{ eventoSeleccionado.event_date_time }}</p>
+          <p><strong>Comentarios:</strong> {{ eventoSeleccionado.log_comments }}</p>
+          <p><strong>Plataforma:</strong> {{ eventoSeleccionado.client_platform_name }}</p>
+          <p><strong>Versión de OS:</strong> {{ eventoSeleccionado.client_os_version }}</p>
+          <p><strong>Versión de App:</strong> {{ eventoSeleccionado.client_app_version }}</p>
+          <p><strong>Componente:</strong> {{ eventoSeleccionado.component_name }}</p>
+          <!-- Agrega más campos si es necesario -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
