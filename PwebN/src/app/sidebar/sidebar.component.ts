@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';  // Asegúrate de que la ruta sea correcta
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { Modal } from 'bootstrap'; // Asegúrate de importar Modal de Bootstrap
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,27 +9,37 @@ import { Modal } from 'bootstrap'; // Asegúrate de importar Modal de Bootstrap
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  private modalInstance: Modal | null = null; // Para manejar la instancia del modal
+  submenuOpen: boolean = false; // Controla el estado del submenú
+  private modalInstance: Modal | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
+
+  toggleSubMenu(event: Event) {
+    event.preventDefault(); // Evita la navegación o comportamiento predeterminado
+    this.submenuOpen = !this.submenuOpen; // Alterna el estado del submenú
+  }
+
+  onSubMenuClick(event: Event) {
+    event.stopPropagation(); // Evita que el submenú se cierre al hacer clic en una opción
+  }
 
   openLogoutModal() {
     const modalElement = document.getElementById('logoutModal');
     if (modalElement) {
-      this.modalInstance = new Modal(modalElement); // Inicializa el modal
-      this.modalInstance.show(); // Muestra el modal
+      this.modalInstance = new Modal(modalElement);
+      this.modalInstance.show();
     }
   }
 
   closeModal() {
     if (this.modalInstance) {
-      this.modalInstance.hide(); // Cierra el modal
+      this.modalInstance.hide();
     }
   }
 
   confirmLogout() {
-    this.closeModal(); // Cierra el modal antes de cerrar sesión
-    this.authService.logout(); // Implementa este método en tu servicio de autenticación
-    this.router.navigate(['/login']); // Redirige a la página de login
+    this.closeModal();
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

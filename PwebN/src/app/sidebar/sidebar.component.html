@@ -11,10 +11,6 @@
       <a class="item" routerLink="/tramites">
         <i class="fa fa-bookmark"></i> Tramites</a>
     </li>
-    <!--<li>
-      <a class="item" routerLink="/#">
-        <i class="fa fa-calendar"></i> Citas</a>
-    </li>-->
     <li>
       <a class="item" routerLink="/noticias">
         <i class="far fa-comment-alt"></i> Noticias</a>
@@ -31,9 +27,19 @@
       <a class="item" routerLink="/usuarios-de-app-movil">
         <i class="fa fa-mobile-alt"></i> Usuarios de App Móvil</a>
     </li>
+    <!-- Submenú de Reportes -->
     <li>
-      <a class="item" routerLink="/reports">
-        <i class="fa fa-file-text"></i> Reportes</a>
+      <a class="item" (click)="toggleSubMenu($event)">
+        <i class="fa fa-file-text"></i> Reportes
+        <i class="fa" [ngClass]="{'fa-chevron-down': !submenuOpen, 'fa-chevron-up': submenuOpen}"></i>
+      </a>
+      <ul *ngIf="submenuOpen" class="submenu">
+        <li>
+          <a class="item" routerLink="/reports" (click)="onSubMenuClick($event)">
+            <i class="fa fa-database"></i> Logs de Eventos
+          </a>
+        </li>
+      </ul>
     </li>
     <li>
       <a class="item" (click)="openLogoutModal()">
@@ -56,7 +62,7 @@
         <p class="fw-light">Para volver a iniciar sesión, necesitará ingresar de nuevo su correo y su contraseña.</p>
       </div>
       <div class="modal-footer">
-        <button  type="button" class="btn btn-primary fw-bold" style="background-color: rgb(229, 00, 105); border-radius: 10px; border-color: rgb(192, 4, 92)" (click)="confirmLogout()">
+        <button type="button" class="btn btn-primary fw-bold" style="background-color: rgb(229, 00, 105); border-radius: 10px; border-color: rgb(192, 4, 92)" (click)="confirmLogout()">
           <i class="fas fa-check"></i> Aceptar</button>
         <button type="button" class="btn btn-outline-white" data-dismiss="modal" (click)="closeModal()">
           <i class="fas fa-times"></i> Cancelar</button>
@@ -64,4 +70,3 @@
     </div>
   </div>
 </div>
-

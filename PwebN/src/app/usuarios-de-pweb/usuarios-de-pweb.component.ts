@@ -13,13 +13,13 @@ declare var bootstrap: any; // Para usar Bootstrap JS en el componente
 export class UsuariosDePwebComponent implements OnInit {
   usuarios: any[] = [];
   usuarioSeleccionado: any = {}; // Usuario actualmente seleccionado para edición o eliminación
-  verificarPassword: string = ''; // Campo para verificar la contraseña
   currentPage: number = 1;
   itemsPerPage: number = 8;
   searchTerm: string = '';
   Math = Math;
 
   private token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IEdhcmNpYSIsImV4cCI6MTcwNDkwMTM1N30.ORsWQWxVBCjlhItaZ1e63qBIqEL1LFOjKuydoEaDBZg';
+  private successModalInstance: any; // Instancia del modal de éxito
 
   constructor(private http: HttpClient) {}
 
@@ -50,7 +50,6 @@ export class UsuariosDePwebComponent implements OnInit {
   get filteredUsuarios() {
     return this.usuarios.filter(usuario => 
       usuario.fullname.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      usuario.userlogin.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       usuario.phone.includes(this.searchTerm)
     );
   }
@@ -76,13 +75,62 @@ export class UsuariosDePwebComponent implements OnInit {
     }
   }
 
-  // Confirma la edición del usuario
+  // Confirma la edición del usuario y envía los datos a la API
   confirmarEdicion() {
-    console.log('Usuario editado:', this.usuarioSeleccionado);
-    const modalElement = document.getElementById('editUserModal');
+    const payload = {
+      user_id: this.usuarioSeleccionado.id,
+      full_name: this.usuarioSeleccionado.fullname,
+      phone_number: this.usuarioSeleccionado.phone,
+      user_type_id: this.usuarioSeleccionado.usertype
+    };
+
+    const url = 'https://apisprueba.fpfch.gob.mx/api/v1/panel/users/update';
+    const headers = new HttpHeaders({
+      'Authorization': this.token,
+      'Content-Type': 'application/json'
+    });
+
+    this.http.put(url, payload, { headers }).subscribe(
+      (response) => {
+        console.log('Usuario actualizado:', response);
+        // Actualizar el usuario localmente
+        const index = this.usuarios.findIndex(u => u.id === this.usuarioSeleccionado.id);
+        if (index !== -1) {
+          this.usuarios[index] = { ...this.usuarioSeleccionado };
+        }
+
+        // Cerrar el modal de edición
+        const modalElement = document.getElementById('editUserModal');
+        if (modalElement) {
+          const modalInstance = bootstrap.Modal.getInstance(modalElement);
+          modalInstance.hide();
+        }
+
+        // Mostrar el modal de éxito
+        this.mostrarModalExito();
+      },
+      (error) => {
+        console.error('Error al actualizar el usuario:', error);
+      }
+    );
+  }
+
+  mostrarModalExito() {
+    const modalElement = document.getElementById('successModal');
     if (modalElement) {
-      const modalInstance = bootstrap.Modal.getInstance(modalElement);
-      modalInstance.hide();
+      this.successModalInstance = new bootstrap.Modal(modalElement);
+      this.successModalInstance.show();
+    }
+  }
+
+  cerrarModalExito() {
+    if (this.successModalInstance) {
+      this.successModalInstance.hide(); // Oculta el modal
+      const modalBackdrop = document.querySelector('.modal-backdrop'); // Busca el fondo oscuro
+      if (modalBackdrop) {
+        modalBackdrop.remove(); // Elimina el fondo oscuro si sigue presente
+      }
+      this.successModalInstance = null; // Limpia la referencia
     }
   }
 
@@ -121,21 +169,12 @@ export class UsuariosDePwebComponent implements OnInit {
     );
   }
 
-  mostrarModalExito() {
-    const modalElement = document.getElementById('deleteSuccessModal');
-    if (modalElement) {
-      const deleteSuccessModal = new bootstrap.Modal(modalElement);
-      deleteSuccessModal.show();
-    }
-  }
-
   exportarExcel(): void {
     const nombreArchivo = prompt("Ingrese el nombre del archivo:", "usuarios_panel_web");
 
     if (nombreArchivo) {
       const usuariosConEncabezados = this.usuarios.map(usuario => ({
         "Nombre de usuario": usuario.fullname,
-        "Correo electrónico": usuario.userlogin,
         "Teléfono": usuario.phone,
         "Rol": this.obtenerRol(usuario.usertype)
       }));

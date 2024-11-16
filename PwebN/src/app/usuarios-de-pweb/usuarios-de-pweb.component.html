@@ -66,10 +66,6 @@
             <input type="text" class="form-control" id="editNombre" [(ngModel)]="usuarioSeleccionado.fullname" name="fullname">
           </div>
           <div class="mb-3">
-            <label for="editCorreo" class="form-label">Correo</label>
-            <input type="email" class="form-control" id="editCorreo" [(ngModel)]="usuarioSeleccionado.userlogin" name="userlogin">
-          </div>
-          <div class="mb-3">
             <label for="editTelefono" class="form-label">Teléfono</label>
             <input type="text" class="form-control" id="editTelefono" [(ngModel)]="usuarioSeleccionado.phone" name="phone">
           </div>
@@ -83,13 +79,8 @@
               <option value="5">Comunicación Social</option>
             </select>
           </div>
-          <div class="mb-3">
-            <label for="editPassword" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="editPassword" [(ngModel)]="usuarioSeleccionado.password" name="password">
-          </div>
-          <div class="mb-3">
-            <label for="editPasswordVerify" class="form-label">Verificar Contraseña</label>
-            <input type="password" class="form-control" id="editPasswordVerify" [(ngModel)]="verificarPassword" name="passwordVerify">
+          <div>
+            <button type="button" class="btn btn-primary">Reiniciar contraseña</button>
           </div>
         </form>
       </div>
@@ -109,7 +100,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ¿Seguro que desea eliminar al usuario con ID "{{ usuarioSeleccionado.id }}"?
+        ¿Seguro que desea eliminar al usuario: {{ usuarioSeleccionado.fullname}}?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -132,6 +123,24 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Confirmación de Modificación -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Usuario modificado correctamente.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="cerrarModalExito()">Aceptar</button>
       </div>
     </div>
   </div>

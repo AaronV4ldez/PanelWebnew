@@ -55,3 +55,18 @@
   padding-top: 0; /* Eliminar márgenes */
   /*padding: 0; Ajustar el padding si es necesario */
 }
+.submenu {
+  margin-left: 20px; /* Espaciado para diferenciar del menú principal */
+  list-style: none;
+  padding-left: 0;
+}
+
+.submenu li a {
+  font-size: 0.9rem;
+  color: #555;
+  text-decoration: none;
+}
+
+.submenu li a:hover {
+  color: #007bff;
+}

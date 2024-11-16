@@ -59,27 +59,39 @@ export class ReportsComponent implements OnInit {
     this.currentPage = pagina;
   }
 
-  // Exportar datos a Excel
-  exportarExcel(): void {
-    const nombreArchivo = prompt("Ingrese el nombre del archivo:", "Reportes_logs");
+// Exportar datos a Excel
+exportarExcel(): void {
+  const nombreArchivo = prompt("Ingrese el nombre del archivo:", "Reportes_logs");
 
-    if (nombreArchivo) {
-      const logsConEncabezados = this.logs.map(log => ({
-        "Evento": log.event_name,
-        "Comentarios": log.log_comments,
-        "Fecha y hora": log.event_date_time
-      }));
+  if (nombreArchivo) {
+    // Imprimir el JSON completo que se exportará en la consola
+    console.log('JSON completo que se exporta:', this.logs);
 
-      const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(logsConEncabezados);
-      const libro: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Reportes_logs');
+    // Incluir todo el contenido del JSON
+    const logsConEncabezados = this.logs.map(log => ({
+      "ID Evento": log.entry_id,
+      "Evento": log.event_name,
+      "Comentarios": log.log_comments,
+      "Fecha y hora": log.event_date_time,
+      "Plataforma": log.client_platform_name,
+      "Versión OS": log.client_os_version,
+      "Versión App": log.client_app_version,
+      "Nombre del Componente": log.component_name,
+      "ID App": log.id_app
+    }));
 
-      const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
-      saveAs(new Blob([archivo], { type: 'application/octet-stream' }), `${nombreArchivo}.xlsx`);
-    } else {
-      console.log("Exportación cancelada");
-    }
+    // Crear hoja de Excel y agregar encabezados
+    const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(logsConEncabezados);
+    const libro: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Reportes_logs');
+
+    // Generar archivo Excel
+    const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
+    saveAs(new Blob([archivo], { type: 'application/octet-stream' }), `${nombreArchivo}.xlsx`);
+  } else {
+    console.log("Exportación cancelada");
   }
+}
 
   // Abre el modal de detalles con el evento seleccionado
   abrirModalDetalle(log: any): void {
