@@ -83,7 +83,7 @@ exportarExcel(): void {
     // Crear hoja de Excel y agregar encabezados
     const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(logsConEncabezados);
     const libro: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Reportes_logs');
+    XLSX.utils.book_append_sheet(libro, hojaTrabajo, 'Reportes_logs_eventos');
 
     // Generar archivo Excel
     const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });

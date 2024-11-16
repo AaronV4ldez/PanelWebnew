@@ -1,96 +1,115 @@
-<div class="container-fluid bg-white" style="height: auto; width: 100%; max-width: 100rem; display:flex; flex-direction: column; justify-content: center; border-radius: 15px; padding: 20px;">
-  <div class="container border border-light" style="max-width: 95%; padding: 20px;">
-    <div class="row mb-4">
-      <div class="col-6">
-        <h2 class="">Noticias</h2>
-      </div>
-      <div class="col-6 text-end">
-        <button class="btn btn-light btn-sm me-2"><i class="fa fa-search"></i></button>
-        <a routerLink="/noticias-create">
-          <button class="btn btn-primary btn-sm me-2"><i class="fa fa-plus"></i> Agregar</button>
-        </a>
-        <button class="btn btn-outline-secondary btn-sm">Exportar</button>
-      </div>
+<div class="content-wrapper contenedor-cuadro">
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="title m-0">Noticias</h2>
+    <div>
+      <input
+        type="text"
+        class="form-control d-inline-block me-2"
+        placeholder="Buscar noticias..."
+        [(ngModel)]="searchTerm"
+        style="width: 300px; display: inline-block;"
+      />
+      <a routerLink="/noticias-create">
+        <button class="btn btn-primary btn-sm me-2">
+          <i class="fa fa-plus"></i> Agregar
+        </button>
+      </a>
+      <button class="btn btn-outline-secondary btn-sm" (click)="exportarNoticias()">
+        <i class="fa fa-download"></i> Exportar
+      </button>
     </div>
+  </div>
 
-    <!-- Encabezados de la tabla -->
-    <div class="row border-bottom border-light bg-light py-2">
-      <div class="col-8">
-        <strong>Título</strong>
-      </div>
-      <div class="col-2">
-        <strong>Fecha de alta</strong>
-      </div>
-      <div class="col-2">
-        <strong>Acciones</strong>
-      </div>
+  <!-- Tabla de noticias -->
+  <div class="table-responsive">
+    <table class="table custom-table">
+      <thead class="table-light">
+        <tr>
+          <th style="width: 60%;">Título</th>
+          <th style="width: 20%;">Fecha de alta</th>
+          <th style="width: 20%;" class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let noticia of filteredNoticias | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }"
+          class="align-middle"
+        >
+          <td class="text-truncate" title="{{ noticia.note_title }}">{{ noticia.note_title }}</td>
+          <td>{{ noticia.created_at | date: 'dd MMM yyyy hh:mm a' }}</td>
+          <td class="text-center">
+            <button class="btn btn-light btn-sm me-1" (click)="abrirModal(noticia)">
+              <i class="fa fa-eye"></i>
+            </button>
+            <a [routerLink]="['/noticias-create', noticia.entry_id]">
+              <button class="btn btn-light btn-sm me-1" title="Editar">
+                <i class="fa fa-pen-to-square"></i>
+              </button>
+            </a>
+            <button class="btn btn-light btn-sm" (click)="confirmarEliminar(noticia)" title="Eliminar">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <div class="pagination-controls d-flex justify-content-between align-items-center mt-4">
+    <div>
+      <label for="itemsPerPage" class="me-2">Mostrar</label>
+      <select
+        id="itemsPerPage"
+        class="form-select d-inline-block w-auto"
+        [(ngModel)]="itemsPerPage"
+      >
+        <option *ngFor="let num of [5, 10, 15, 20]" [value]="num">{{ num }}</option>
+      </select>
+      <span class="ms-2">noticias</span>
     </div>
+    <pagination-controls
+      (pageChange)="currentPage = $event"
+      previousLabel="&laquo;"
+      nextLabel="&raquo;"
+    ></pagination-controls>
+  </div>
 
-    <!-- Fila de cada noticia -->
-    <div *ngFor="let noticia of noticias" class="row border-bottom border-light py-2 align-items-center">
-      <div class="col-8 text-truncate">
-        <p class="m-0">{{ noticia.note_title }}</p>
-      </div>
-      <div class="col-2">
-        <p class="m-0">{{ noticia.created_at | date: 'dd MMM yyyy hh:mm a' }}</p>
-      </div>
-      <div class="col-2 text-end">
-        <button class="btn btn-light btn-sm" (click)="abrirModal(noticia)"><i class="fa fa-eye"></i></button>
-        <button class="btn btn-light btn-sm me-1" title="Editar"><i class="fa fa-pen-to-square"></i></button>
-        <button class="btn btn-light btn-sm" (click)="confirmarEliminar(noticia)" title="Eliminar"><i class="fa fa-trash"></i></button>
-      </div>
-    </div>
-
-    <!-- Modal de confirmación de eliminación -->
-    <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>¿Seguro que quieres eliminar esta noticia?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-danger" (click)="eliminarNoticia()">Sí, eliminar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-     <!-- Modal -->
-  <div class="modal fade" id="noticiaModal" tabindex="-1" aria-labelledby="noticiaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 25%;">
+  <!-- Modal de Confirmación de Eliminación -->
+  <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="noticiaModalLabel">{{ noticiaSeleccionada?.note_title }}</h5>
+          <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar Eliminación</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="embed-responsive" style="position: relative; width: 100%; height: 0; padding-bottom: 177.78%;">
-            <iframe [src]="safeUrl(noticiaSeleccionada?.note_hyperlink)" 
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-                    frameborder="0" allowfullscreen></iframe>
-
-    <!-- Modal de éxito al eliminar -->
-    <div class="modal fade" id="eliminarExitoModal" tabindex="-1" aria-labelledby="eliminarExitoModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="eliminarExitoModalLabel">Noticia Eliminada</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>Noticia eliminada correctamente.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-          </div>
+          <p>¿Seguro que quieres eliminar esta noticia?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="eliminarNoticia()">Sí, eliminar</button>
         </div>
       </div>
     </div>
+  </div>
 
+  <!-- Modal de Éxito -->
+  <div class="modal fade" id="eliminarExitoModal" tabindex="-1" aria-labelledby="eliminarExitoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarExitoModalLabel">Eliminación Exitosa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Noticia eliminada correctamente.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
