@@ -10,24 +10,32 @@
                 <input type="text" class="form-control me-2" placeholder="Hasta" onfocus="(this.type='date')">
                 <button class="btn btn-primary search-btn" (click)="openFiltroModal()"><i class="fa fa-search"></i></button>
             </div>
-            <button class="btn btn-outline-primary export-btn" (click)="exportarExcel()">
-                <i class="fa fa-download"></i> Exportar
-            </button>
+            <div>
+                <button class="btn btn-primary btn-sm me-2"><i class="fa fa-check"></i> Asignar</button>
+                <button class="btn btn-secondary btn-sm me-2"><i class="fa fa-times"></i> Reasignar</button>
+                <button class="btn btn-outline-primary export-btn" (click)="exportarExcel()">
+                    <i class="fa fa-download"></i> Exportar
+                </button>
+            </div>
         </div>
 
         <table class="table custom-table">
             <thead>
                 <tr>
+                    <!--<th><input type="checkbox" (change)="toggleSelectAll($event)"></th>-->
+                    <th><input type="checkbox"></th>
                     <th>Folio</th>
                     <th>Nombre de usuario</th>
                     <th>Trámite</th>
                     <th>Estatus</th>
                     <th>Último movimiento</th>
+                    <th>Asesor</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let tramite of filteredTramites | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+                    <td><input type="checkbox" [(ngModel)]="tramite.selected"></td>
                     <td>{{ tramite.folio }}</td>
                     <td>{{ tramite.nombreUsuario }}</td>
                     <td class="text-primary">{{ tramite.eltramite }}</td>
@@ -41,8 +49,9 @@
                             'badge-cita': tramite.estatus === 'Cita Agendada',
                             'badge-cancelada': tramite.estatus === 'Proceso Cancelado'
                         }">{{ tramite.estatus }}</span>
-                    </td>                    
-                    <td>{{ tramite.ultimoMovimiento | date: 'dd MMM yyyy hh:mm a'  }}</td>
+                    </td>
+                    <td>{{ tramite.ultimoMovimiento | date: 'dd MMM yyyy hh:mm a' }}</td>
+                    <td>{{ tramite.asesor || 'Sin asignar' }}</td>
                     <td><button class="btn btn-link"><i class="fa fa-eye"></i></button></td>
                 </tr>
             </tbody>
@@ -122,4 +131,31 @@
         </div>
       </div>
     </div>
+    
 </div>
+<!--
+<div class="modal fade" id="asignarTramiteModal" tabindex="-1" aria-labelledby="asignarTramiteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="asignarTramiteModalLabel">Asignar trámite</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="usuarioDropdown" class="form-label">Seleccione un asesor</label>
+          <select id="usuarioDropdown" class="form-select" [(ngModel)]="selectedAsesorId">
+            <option *ngFor="let usuario of usuarios" [value]="usuario.id">
+              {{ usuario.fullname }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="asignarTramites()">Asignar</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->
