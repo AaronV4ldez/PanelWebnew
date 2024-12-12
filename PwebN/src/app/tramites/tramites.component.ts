@@ -19,6 +19,12 @@ export class TramitesComponent implements OnInit {
   itemsPerPage: number = 10;
   Math = Math; // Para usar Math en la plantilla
 
+  // Nuevas propiedades para los usuarios y modal
+  usuariosTramitadores: any[] = [];
+  modalAsignacion: any;
+  tramitesSeleccionados: any[] = [];
+  usuarioSeleccionadoId: number | null = null;
+
   constructor(private http: HttpClient, private fb: FormBuilder) {
     this.filtroForm = this.fb.group({
       usuario: [''],
@@ -31,6 +37,7 @@ export class TramitesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTramites();
+    this.getUsuariosTramitadores(); // Cargar los usuarios desde la API
   }
 
   getTramites(): void {
@@ -45,7 +52,9 @@ export class TramitesComponent implements OnInit {
           eltramite: tramite.procedure_name,
           estatus: tramite.status,
           creadoEn: tramite.created_at,
-          ultimoMovimiento: tramite.updated_at
+          ultimoMovimiento: tramite.updated_at,
+          asesor: tramite.asesor || 'Sin asignar', // Asesor añadido
+          selected: false // Propiedad para selección de trámites
         }));
         this.tramites = [...this.tramitesOriginales];
       },
@@ -55,22 +64,86 @@ export class TramitesComponent implements OnInit {
     );
   }
 
-  // Cambia la página actual
+  getUsuariosTramitadores(): void {
+    const url = 'https://apisprueba.fpfch.gob.mx/api/v1/panel/users/web-users';
+    const headers = { Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IEdhcmNpYSIsImV4cCI6MTcwNDkwMTM1N30.ORsWQWxVBCjlhItaZ1e63qBIqEL1LFOjKuydoEaDBZg' };
+
+    this.http.get<any[]>(url, { headers }).subscribe(
+      (data) => {
+        this.usuariosTramitadores = data.filter(user => user.usertype === 2).map(user => ({
+          id: user.id,
+          fullname: user.fullname
+        }));
+      },
+      (error) => {
+        console.error('Error al obtener los usuarios tramitadores', error);
+      }
+    );
+  }
+
+  abrirModalAsignacion(): void {
+    this.tramitesSeleccionados = this.tramites.filter(tramite => tramite.selected);
+    if (this.tramitesSeleccionados.length === 0) {
+      alert('Selecciona al menos un trámite para asignar o reasignar.');
+      return;
+    }
+
+    const modalElement = document.getElementById('modalAsignacion');
+    if (modalElement) {
+      this.modalAsignacion = new bootstrap.Modal(modalElement, {
+        backdrop: 'static',
+        keyboard: false
+      });
+      this.modalAsignacion.show();
+    } else {
+      console.error('No se encontró el elemento del modal de asignación.');
+    }
+  }
+
+  asignarTramites(): void {
+    if (!this.usuarioSeleccionadoId) {
+      alert('Selecciona un usuario para asignar los trámites.');
+      return;
+    }
+
+    const url = 'https://apisprueba.fpfch.gob.mx/api/v1/panel/procedures/assign';
+    const headers = { Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IEdhcmNpYSIsImV4cCI6MTcwNDkwMTM1N30.ORsWQWxVBCjlhItaZ1e63qBIqEL1LFOjKuydoEaDBZg' };
+
+    const body = {
+      userId: this.usuarioSeleccionadoId,
+      tramiteIds: this.tramitesSeleccionados.map(tramite => tramite.folio)
+    };
+
+    this.http.post(url, body, { headers }).subscribe(
+      () => {
+        this.tramitesSeleccionados.forEach(tramite => {
+          tramite.asesor = this.usuariosTramitadores.find(user => user.id === this.usuarioSeleccionadoId)?.fullname;
+        });
+        this.modalAsignacion.hide();
+        this.usuarioSeleccionadoId = null;
+        alert('Trámites asignados exitosamente.');
+      },
+      (error) => {
+        console.error('Error al asignar trámites', error);
+      }
+    );
+  }
+
   cambiarPagina(pagina: number) {
     this.currentPage = pagina;
   }
 
-  // Exportar datos a Excel
   exportarExcel(): void {
-    const nombreArchivo = prompt("Ingrese el nombre del archivo:", "tramites");
+    const nombreArchivo = prompt('Ingrese el nombre del archivo:', 'tramites');
 
     if (nombreArchivo) {
       const tramitesConEncabezados = this.tramites.map(tramite => ({
-        "Folio": tramite.folio,
-        "Nombre de usuario": tramite.nombreUsuario,
-        "Trámite": tramite.eltramite,
-        "Estatus": tramite.estatus,
-        "Último movimiento": tramite.ultimoMovimiento
+        Folio: tramite.folio,
+        'Nombre de usuario': tramite.nombreUsuario,
+        Trámite: tramite.eltramite,
+        Estatus: tramite.estatus,
+        'Último movimiento': tramite.ultimoMovimiento,
+        Asesor: tramite.asesor
       }));
 
       const hojaTrabajo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(tramitesConEncabezados);
@@ -80,11 +153,10 @@ export class TramitesComponent implements OnInit {
       const archivo = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
       saveAs(new Blob([archivo], { type: 'application/octet-stream' }), `${nombreArchivo}.xlsx`);
     } else {
-      console.log("Exportación cancelada");
+      console.log('Exportación cancelada');
     }
   }
 
-  // Abrir el modal de filtro
   openFiltroModal(): void {
     const modalElement = document.getElementById('filtroTramiteModal');
     if (modalElement) {
@@ -94,24 +166,21 @@ export class TramitesComponent implements OnInit {
       });
       this.filtroTramiteModal.show();
     } else {
-      console.error("No se encontró el elemento del modal");
+      console.error('No se encontró el elemento del modal');
     }
   }
 
-  // Aplicar filtro y cerrar modal
   onBuscar(): void {
     const filtroData = this.filtroForm.value;
     this.aplicarFiltro(filtroData);
     this.filtroTramiteModal.hide();
   }
 
-  // Limpiar los campos del formulario de filtro y restaurar los datos originales
   onLimpiar(): void {
     this.filtroForm.reset();
     this.tramites = [...this.tramitesOriginales];
   }
 
-  // Lógica para aplicar el filtro en los trámites
   aplicarFiltro(filtroData: any): void {
     this.tramites = this.tramitesOriginales.filter(tramite => {
       const coincideUsuario = filtroData.usuario
@@ -146,11 +215,15 @@ export class TramitesComponent implements OnInit {
   }
 
   normalizeString(str: string): string {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   }
 
-  // Filtrado de trámites para la paginación
   get filteredTramites() {
     return this.tramites;
   }
+  // Seleccionar o deseleccionar todos los trámites
+toggleSelectAll(event: any): void {
+  const isChecked = event.target.checked;
+  this.tramites.forEach(tramite => tramite.selected = isChecked);
+}
 }

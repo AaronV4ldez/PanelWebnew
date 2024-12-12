@@ -11,8 +11,12 @@
                 <button class="btn btn-primary search-btn" (click)="openFiltroModal()"><i class="fa fa-search"></i></button>
             </div>
             <div>
-                <button class="btn btn-primary btn-sm me-2"><i class="fa fa-check"></i> Asignar</button>
-                <button class="btn btn-secondary btn-sm me-2"><i class="fa fa-times"></i> Reasignar</button>
+                <button class="btn btn-primary btn-sm me-2" (click)="abrirModalAsignacion()">
+                    <i class="fa fa-check"></i> Asignar
+                </button>
+                <button class="btn btn-secondary btn-sm me-2" (click)="abrirModalAsignacion()">
+                    <i class="fa fa-times"></i> Reasignar
+                </button>
                 <button class="btn btn-outline-primary export-btn" (click)="exportarExcel()">
                     <i class="fa fa-download"></i> Exportar
                 </button>
@@ -22,8 +26,7 @@
         <table class="table custom-table">
             <thead>
                 <tr>
-                    <!--<th><input type="checkbox" (change)="toggleSelectAll($event)"></th>-->
-                    <th><input type="checkbox"></th>
+                    <th><input type="checkbox" (change)="toggleSelectAll($event)"></th>
                     <th>Folio</th>
                     <th>Nombre de usuario</th>
                     <th>Trámite</th>
@@ -80,82 +83,80 @@
 <!-- Modal -->
 <div class="modal fade" id="filtroTramiteModal" tabindex="-1" aria-labelledby="filtroTramiteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="filtroTramiteModalLabel">Filtrar trámite</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="filtroForm">
-            <h4>Datos de trámite</h4>
-            
-            <!-- Buscar por usuario -->
-            <div class="mb-3">
-              <label for="usuario" class="form-label">Buscar usuario</label>
-              <input type="text" id="usuario" formControlName="usuario" class="form-control" placeholder="Buscar usuario">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filtroTramiteModalLabel">Filtrar trámite</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
-            <!-- Tipo de trámite -->
-            <div class="mb-3">
-              <label for="tipoTramite" class="form-label">Tipo de trámite</label>
-              <select id="tipoTramite" formControlName="tipoTramite" class="form-select">
-                <option value="">Selecciona un tipo</option>
-                <option value="Solicitud de inscripción">Solicitud de inscripción</option>
-                <option value="Inscripción en otro puente">Inscripción en otro puente</option>
-                <option value="Solicitud de cambio de vehículo">Solicitud de cambio de vehículo</option>
-                <option value="Solicitud de transferencia de saldo">Solicitud de transferencia de saldo</option>
-                <option value="Solicitud de baja de vehículo">Solicitud de baja de vehículo</option>
-                <option value="Registro de vehículo adicional">Registro de vehículo adicional</option>
-              </select>
+            <div class="modal-body">
+                <form [formGroup]="filtroForm">
+                    <h4>Datos de trámite</h4>
+
+                    <!-- Buscar por usuario -->
+                    <div class="mb-3">
+                        <label for="usuario" class="form-label">Buscar usuario</label>
+                        <input type="text" id="usuario" formControlName="usuario" class="form-control" placeholder="Buscar usuario">
+                    </div>
+
+                    <!-- Tipo de trámite -->
+                    <div class="mb-3">
+                        <label for="tipoTramite" class="form-label">Tipo de trámite</label>
+                        <select id="tipoTramite" formControlName="tipoTramite" class="form-select">
+                            <option value="">Selecciona un tipo</option>
+                            <option value="Solicitud de inscripción">Solicitud de inscripción</option>
+                            <option value="Inscripción en otro puente">Inscripción en otro puente</option>
+                            <option value="Solicitud de cambio de vehículo">Solicitud de cambio de vehículo</option>
+                            <option value="Solicitud de transferencia de saldo">Solicitud de transferencia de saldo</option>
+                            <option value="Solicitud de baja de vehículo">Solicitud de baja de vehículo</option>
+                            <option value="Registro de vehículo adicional">Registro de vehículo adicional</option>
+                        </select>
+                    </div>
+
+                    <!-- Estatus -->
+                    <div class="mb-3">
+                        <label for="estatus" class="form-label">Estatus</label>
+                        <select id="estatus" formControlName="estatus" class="form-select">
+                            <option value="">Selecciona un estatus</option>
+                            <option value="Iniciado">Iniciado</option>
+                            <option value="Asignado a asesor">Asignado a asesor</option>
+                            <option value="Trámite pre-autorizado">Trámite pre-autorizado</option>
+                            <option value="Documentos rechazados">Documentos rechazados</option>
+                            <option value="Finalizado">Finalizado</option>
+                            <option value="Cita Agendada">Cita Agendada</option>
+                            <option value="Proceso Cancelado">Proceso Cancelado</option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            
-            <!-- Estatus -->
-            <div class="mb-3">
-              <label for="estatus" class="form-label">Estatus</label>
-              <select id="estatus" formControlName="estatus" class="form-select">
-                <option value="">Selecciona un estatus</option>
-                <option value="Iniciado">Iniciado</option>
-                <option value="Asignado a asesor">Asignado a asesor</option>
-                <option value="Trámite pre-autorizado">Trámite pre-autorizado</option>
-                <option value="Documentos rechazados">Documentos rechazados</option>
-                <option value="Finalizado">Finalizado</option>
-                <option value="Cita Agendada">Cita Agendada</option>
-                <option value="Proceso Cancelado">Proceso Cancelado</option>
-              </select>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="onLimpiar()">Limpiar</button>
+                <button type="button" class="btn btn-primary" (click)="onBuscar()">Buscar</button>
             </div>
-          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="onLimpiar()">Limpiar</button>
-          <button type="button" class="btn btn-primary" (click)="onBuscar()">Buscar</button>
-        </div>
-      </div>
     </div>
-    
 </div>
-<!--
-<div class="modal fade" id="asignarTramiteModal" tabindex="-1" aria-labelledby="asignarTramiteModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="asignarTramiteModalLabel">Asignar trámite</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label for="usuarioDropdown" class="form-label">Seleccione un asesor</label>
-          <select id="usuarioDropdown" class="form-select" [(ngModel)]="selectedAsesorId">
-            <option *ngFor="let usuario of usuarios" [value]="usuario.id">
-              {{ usuario.fullname }}
-            </option>
-          </select>
+
+<div class="modal fade" id="modalAsignacion" tabindex="-1" aria-labelledby="modalAsignacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAsignacionLabel">Asignar/Reasignar trámites</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="usuarioDropdown" class="form-label">Seleccione un asesor</label>
+                    <select id="usuarioDropdown" class="form-select" [(ngModel)]="usuarioSeleccionadoId">
+                        <option *ngFor="let usuario of usuariosTramitadores" [value]="usuario.id">
+                            {{ usuario.fullname }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="asignarTramites()">Asignar</button>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="asignarTramites()">Asignar</button>
-      </div>
     </div>
-  </div>
 </div>
--->
