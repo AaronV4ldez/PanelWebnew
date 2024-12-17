@@ -1,109 +1,59 @@
-.modal-content {
-  border: none; /* Eliminar el borde del contenido del modal */
-}
-
-.modal-header{
-  border: none; /* Eliminar los bordes de cada sección */
-}
-.modal-body{
-  padding-bottom: 0;
-  padding-top: 0;
-}
-.modal-footer {
-  border: none; /* Eliminar los bordes de cada sección */
-  margin: 0;
-  padding-top: 0; /* Eliminar márgenes */
-  /*padding: 0; Ajustar el padding si es necesario */
-}
-/* Contenedor principal */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Sección Superior para Alinear los Elementos */
-.top-section {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
 /* Filtros de Fecha */
-.date-filters {
-  display: flex;
-  gap: 20px;
-}
-
 .date-picker {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .date-picker label {
   font-weight: bold;
-  color: #333;
+  color: #555;
 }
 
 /* Contadores de Usuarios */
-.user-counters {
-  display: flex;
-  gap: 20px;
-}
-
 .counter-box {
-  background-color: #f7f7f7;
-  padding: 20px;
-  border-radius: 15px;
+  background-color: #f9f9f9;
+  padding: 25px;
+  border-radius: 10px;
   text-align: center;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 180px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .counter-box:hover {
   transform: translateY(-5px);
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .counter-box i {
-  font-size: 36px;
-  color: #00aaff;
+  font-size: 40px;
+  color: #007bff;
 }
 
 .counter-box h3 {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  margin: 10px 0;
   color: #333;
-  margin-top: 10px;
 }
 
 .counter-box p {
   font-size: 22px;
   font-weight: bold;
   color: #555;
-  margin-top: 5px;
 }
 
-/* Botones de Acciones en la Parte Superior Derecha */
-.action-buttons {
-  display: flex;
-  gap: 20px;
-}
-
+/* Botones de Acción */
 .action-btn {
-  padding: 15px 20px;
-  border-radius: 12px;
-  font-size: 16px;
+  padding: 15px 25px;
+  border-radius: 50px;
+  color: white;
   font-weight: bold;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   align-items: center;
   gap: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .action-btn i {
@@ -111,25 +61,71 @@
 }
 
 .action-btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
 }
 
 .recargas {
-  background: linear-gradient(135deg, #ff4081, #ff6e8d);
+  background: linear-gradient(135deg, #ff6f91, #ff4081);
 }
 
 .saldo {
-  background: linear-gradient(135deg, #1976d2, #2196f3);
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
 }
 
 .info {
-  background: linear-gradient(135deg, #8e24aa, #9c27b0);
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
 }
 
-/* Ajustes de Espaciado y Tamaño */
-.date-picker input {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+/* Gráficos */
+.chart-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 15px;
+  text-align: center;
+}
+/* Diseño del Modal */
+.modal-content {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-body {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.modal-body i {
+  font-size: 30px;
+  color: #ff4081;
+}
+
+.modal-body p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.modal-footer button {
+  font-size: 16px;
+  padding: 10px 20px;
 }

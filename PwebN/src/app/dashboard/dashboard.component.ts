@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Chart, ChartConfiguration } from 'chart.js';
+import { Chart } from 'chart.js';
 
 declare var bootstrap: any;
 
@@ -13,10 +13,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('assignedChart') assignedChartRef!: ElementRef;
   @ViewChild('categoryChart') categoryChartRef!: ElementRef;
 
+  // Propiedades para contadores y fechas
   webUserCount: number = 0;
   appUserCount: number = 0;
   startDate: string = '';
   endDate: string = '';
+  startDateAssigned: string = ''; // Nueva propiedad para el gráfico de trámites asignados
+  endDateAssigned: string = '';   // Nueva propiedad para el gráfico de trámites asignados
+  startDateCategory: string = ''; // Nueva propiedad para el gráfico de categorías
+  endDateCategory: string = '';   // Nueva propiedad para el gráfico de categorías
 
   constructor(private http: HttpClient) {}
 
@@ -35,6 +40,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.initCharts();
   }
 
+  // Métodos existentes...
   getWebUsersCount() {
     const url = 'https://apisprueba.fpfch.gob.mx/api/v1/panel/users/web-users';
     const headers = new HttpHeaders({
@@ -68,7 +74,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   initCharts() {
-    // Gráfico de trámites asignados
     const assignedChartCtx = this.assignedChartRef.nativeElement.getContext('2d');
     new Chart(assignedChartCtx, {
       type: 'line',
@@ -81,7 +86,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     });
 
-    // Gráfico de categoría de trámites
     const categoryChartCtx = this.categoryChartRef.nativeElement.getContext('2d');
     new Chart(categoryChartCtx, {
       type: 'bar',

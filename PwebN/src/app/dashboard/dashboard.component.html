@@ -3,49 +3,66 @@
 
 <div class="bg-general">
   <div class="container mt-5">
-    <!-- Contenedor para Filtros de Fecha y Contadores de Usuarios -->
-    <div class="top-section">
-      <!-- Filtros de Fecha encima de los contadores -->
-      <div class="date-filters d-flex gap-3 justify-content-start mb-3">
-        <div class="date-picker">
+    <!-- Filtros de Fecha -->
+    <div class="row align-items-center mb-4">
+      <div class="col-md-6">
+        <div class="date-picker d-flex gap-2">
           <label>Desde:</label>
           <input type="date" [(ngModel)]="startDate">
         </div>
-        <div class="date-picker">
+      </div>
+      <div class="col-md-6">
+        <div class="date-picker d-flex gap-2">
           <label>Hasta:</label>
           <input type="date" [(ngModel)]="endDate">
         </div>
       </div>
+    </div>
 
-      <!-- Contadores de Usuarios -->
-      <div class="user-counters d-flex gap-3">
-        <a class="item" routerLink="/usuarios-de-panel-web">
-        <div class="counter-box">
+    <!-- Contadores de Usuarios -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="counter-box" routerLink="/usuarios-de-panel-web">
           <i class="fa fa-desktop"></i>
           <h3>Usuarios web</h3>
           <p>{{ webUserCount }} Usuarios</p>
         </div>
-        </a>
-        <a class="item" routerLink="/usuarios-de-app-movil">
-        <div class="counter-box">
+      </div>
+      <div class="col-md-6">
+        <div class="counter-box" routerLink="/usuarios-de-app-movil">
           <i class="fa fa-mobile-alt"></i>
           <h3>Usuarios app</h3>
           <p>{{ appUserCount }} Usuarios</p>
         </div>
-        </a>
       </div>
     </div>
 
-    <!-- Botones de Acción en la Parte Superior Derecha -->
-    <div class="action-buttons d-flex gap-3 justify-content-end mt-4">
-      <button class="action-btn recargas"><i class="fa fa-dollar-sign"></i> Recargas</button>
-      <button class="action-btn saldo"><i class="fa fa-credit-card"></i> Saldo Telepeaje</button>
-      <button class="action-btn info"><i class="fa fa-gem"></i> Info Línea Exprés</button>
+    <!-- Botones de Acción -->
+    <div class="row mb-5">
+      <div class="col-12 d-flex justify-content-center gap-3">
+        <button class="action-btn recargas"><i class="fa fa-dollar-sign"></i> Recargas</button>
+        <button class="action-btn saldo"><i class="fa fa-credit-card"></i> Saldo Telepeaje</button>
+        <button class="action-btn info"><i class="fa fa-gem"></i> Info Línea Exprés</button>
+      </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="chart-container">
+          <h4 class="chart-title">Mis trámites asignados</h4>
+          <canvas #assignedChart></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-container">
+          <h4 class="chart-title">Categoría de trámites</h4>
+          <canvas #categoryChart></canvas>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-
 <!-- Modal para Ambiente de Pruebas -->
 <div class="modal fade" id="pruebaModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
   <div class="modal-dialog">
@@ -61,7 +78,12 @@
         <p class="fw-light">Este es un ambiente de pruebas, los cambios aquí no afectan producción.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary fw-bold" style="background-color: rgb(229, 00, 105); border-radius: 10px; border-color: rgb(192, 4, 92)" data-bs-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-primary fw-bold"
+          style="background-color: rgb(229, 00, 105); border-radius: 10px; border-color: rgb(192, 4, 92);"
+          data-bs-dismiss="modal"
+        >
           <i class="fas fa-check"></i> Aceptar
         </button>
       </div>
