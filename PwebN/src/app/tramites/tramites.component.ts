@@ -17,9 +17,15 @@ export class TramitesComponent implements OnInit {
   filtroTramiteModal: any;
   currentPage: number = 1;
   itemsPerPage: number = 10;
-  Math = Math; // Para usar Math en la plantilla
+  Math = Math;
 
-  // Nuevas propiedades para los usuarios y modal
+  // Propiedades para modal de detalle
+  modalDetalleTramite: any;
+  seccionActual: string = 'detalles'; // Por defecto inicia en 'detalles'
+  tramiteSeleccionado: any = null;
+  archivosAdjuntos: any[] = []; // Aquí se cargarán los archivos adjuntos para el trámite
+  archivoSeleccionado: any = null;
+
   usuariosTramitadores: any[] = [];
   modalAsignacion: any;
   tramitesSeleccionados: any[] = [];
@@ -37,7 +43,7 @@ export class TramitesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTramites();
-    this.getUsuariosTramitadores(); // Cargar los usuarios desde la API
+    this.getUsuariosTramitadores();
   }
 
   getTramites(): void {
@@ -53,8 +59,24 @@ export class TramitesComponent implements OnInit {
           estatus: tramite.status,
           creadoEn: tramite.created_at,
           ultimoMovimiento: tramite.updated_at,
-          asesor: tramite.asesor || 'Sin asignar', // Asesor añadido
-          selected: false // Propiedad para selección de trámites
+          asesor: tramite.asesor || 'Sin asignar',
+          selected: false, // Para selección de trámites
+          // Información adicional para modal
+          sentri: tramite.sentri || null,
+          vencimientoSentri: tramite.vencimiento_sentri || null,
+          colorVehiculo: tramite.color_vehiculo || null,
+          comentario: tramite.comentario || null,
+          fechaCita: tramite.fecha_cita || null,
+          razonSocial: tramite.razon_social || null,
+          rfc: tramite.rfc || null,
+          domicilioFiscal: tramite.domicilio_fiscal || null,
+          correoFiscal: tramite.correo_fiscal || null,
+          telefonoFiscal: tramite.telefono_fiscal || null,
+          estado: tramite.estado || null,
+          codigoPostal: tramite.codigo_postal || null,
+          marcaVehiculo: tramite.marca_vehiculo || null,
+          modeloVehiculo: tramite.modelo_vehiculo || null,
+          tag: tramite.tag || null
         }));
         this.tramites = [...this.tramitesOriginales];
       },
@@ -100,6 +122,27 @@ export class TramitesComponent implements OnInit {
     }
   }
 
+  abrirDetalleTramite(tramite: any): void {
+    this.tramiteSeleccionado = tramite;
+
+    // Simulación de archivos adjuntos (reemplazar con datos reales de la API)
+    this.archivosAdjuntos = [
+        { nombre: 'ID oficial (frente)', aprobado: true, rechazado: false, motivoRechazo: null, url: 'url_del_documento' },
+        { nombre: 'Póliza de seguro', aprobado: false, rechazado: true, motivoRechazo: 'FOTOGRAFÍA BORROSA', url: 'url_del_documento' },
+        // Otros documentos...
+    ];
+
+    this.seccionActual = 'detalles'; // Reiniciar a la vista de detalles
+    const modalElement = document.getElementById('detalleTramiteModal');
+    if (modalElement) {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+    }
+}
+cambiarSeccion(seccion: string): void {
+  this.seccionActual = seccion;
+}
+
   asignarTramites(): void {
     if (!this.usuarioSeleccionadoId) {
       alert('Selecciona un usuario para asignar los trámites.');
@@ -129,13 +172,12 @@ export class TramitesComponent implements OnInit {
     );
   }
 
-  cambiarPagina(pagina: number) {
+  cambiarPagina(pagina: number): void {
     this.currentPage = pagina;
   }
 
   exportarExcel(): void {
     const nombreArchivo = prompt('Ingrese el nombre del archivo:', 'tramites');
-
     if (nombreArchivo) {
       const tramitesConEncabezados = this.tramites.map(tramite => ({
         Folio: tramite.folio,
@@ -218,12 +260,40 @@ export class TramitesComponent implements OnInit {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   }
 
-  get filteredTramites() {
+  get filteredTramites(): any[] {
     return this.tramites;
   }
-  // Seleccionar o deseleccionar todos los trámites
-toggleSelectAll(event: any): void {
-  const isChecked = event.target.checked;
-  this.tramites.forEach(tramite => tramite.selected = isChecked);
-}
+
+  toggleSelectAll(event: any): void {
+    const isChecked = event.target.checked;
+    this.tramites.forEach(tramite => tramite.selected = isChecked);
+  }
+  abrirVistaPrevia(archivo: any): void {
+    // Simulación de vista previa, en producción deberías cargar la URL del archivo adjunto
+    const modalElement = document.getElementById('vistaPreviaModal');
+    this.archivoSeleccionado = archivo; // Guarda el archivo seleccionado para mostrar detalles en el modal
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+  
+  aprobarArchivo(archivo: any): void {
+    // Lógica para aprobar archivo
+    archivo.aprobado = true;
+    archivo.rechazado = false;
+    archivo.motivoRechazo = null;
+    alert(`El archivo "${archivo.nombre}" ha sido aprobado.`);
+  }
+  
+  rechazarArchivo(archivo: any): void {
+    // Lógica para rechazar archivo
+    const motivo = prompt(`Especifica el motivo de rechazo para el archivo "${archivo.nombre}":`);
+    if (motivo) {
+      archivo.aprobado = false;
+      archivo.rechazado = true;
+      archivo.motivoRechazo = motivo;
+      alert(`El archivo "${archivo.nombre}" ha sido rechazado con el motivo: "${motivo}".`);
+    }
+  }
 }

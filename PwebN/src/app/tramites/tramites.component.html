@@ -55,7 +55,8 @@
                     </td>
                     <td>{{ tramite.ultimoMovimiento | date: 'dd MMM yyyy hh:mm a' }}</td>
                     <td>{{ tramite.asesor || 'Sin asignar' }}</td>
-                    <td><button class="btn btn-link"><i class="fa fa-eye"></i></button></td>
+                    <!-- Modificación aquí: botón para abrir el modal de detalle -->
+                    <td><button class="btn btn-link" (click)="abrirDetalleTramite(tramite)"><i class="fa fa-eye"></i></button></td>
                 </tr>
             </tbody>
         </table>
@@ -80,7 +81,118 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Principal con navegación -->
+<div class="modal fade" id="detalleTramiteModal" tabindex="-1" aria-labelledby="detalleTramiteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detalleTramiteModalLabel">
+            {{ seccionActual === 'detalles' ? 'Solicitud de Inscripción' : 'Archivos adjuntos a trámite' }}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Sección de Detalles -->
+          <div *ngIf="seccionActual === 'detalles'">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h6>Información del cliente</h6>
+                <p><strong>Nombre de Usuario:</strong> {{ tramiteSeleccionado?.nombreUsuario || '-' }}</p>
+                <p><strong>Email:</strong> {{ tramiteSeleccionado?.email || '-' }}</p>
+                <p><strong>Asesor:</strong> {{ tramiteSeleccionado?.asesor || 'Sin asignar' }}</p>
+                <p><strong>Estatus:</strong> {{ tramiteSeleccionado?.estatus || '-' }}</p>
+              </div>
+              <div class="col-md-6">
+                <h6>Información del trámite</h6>
+                <p><strong>Último movimiento:</strong> {{ tramiteSeleccionado?.ultimoMovimiento || '-' }}</p>
+                <p><strong>Fecha de inicio:</strong> {{ tramiteSeleccionado?.fechaInicio || '-' }}</p>
+                <p><strong>Fecha de finalización:</strong> {{ tramiteSeleccionado?.fechaFinalizacion || '-' }}</p>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-md-6">
+                <h6>Datos de facturación</h6>
+                <p><strong>Razón Social:</strong> {{ tramiteSeleccionado?.razonSocial || '-' }}</p>
+                <p><strong>RFC:</strong> {{ tramiteSeleccionado?.rfc || '-' }}</p>
+              </div>
+              <div class="col-md-6">
+                <h6>Información del vehículo</h6>
+                <p><strong>Marca:</strong> {{ tramiteSeleccionado?.marcaVehiculo || '-' }}</p>
+                <p><strong>Modelo:</strong> {{ tramiteSeleccionado?.modeloVehiculo || '-' }}</p>
+                <p><strong>Color:</strong> {{ tramiteSeleccionado?.colorVehiculo || '-' }}</p>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Sección de Archivos Adjuntos -->
+          <div *ngIf="seccionActual === 'adjuntos'">
+            <h6>Archivos adjuntos a trámite</h6>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Documento</th>
+                  <th>Aprobación</th>
+                  <th>Motivo de rechazo</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let archivo of archivosAdjuntos">
+                  <td>{{ archivo.nombre }}</td>
+                  <td>
+                    <i class="fa" [ngClass]="{
+                      'fa-check-circle text-success': archivo.aprobado,
+                      'fa-times-circle text-danger': archivo.rechazado,
+                      'fa-minus-circle text-secondary': !archivo.aprobado && !archivo.rechazado
+                    }"></i>
+                  </td>
+                  <td>{{ archivo.motivoRechazo || '-' }}</td>
+                  <td>
+                    <button class="btn btn-link" (click)="abrirVistaPrevia(archivo)"><i class="fa fa-eye"></i></button>
+                    <button class="btn btn-link" (click)="aprobarArchivo(archivo)"><i class="fa fa-check"></i></button>
+                    <button class="btn btn-link text-danger" (click)="rechazarArchivo(archivo)"><i class="fa fa-times"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- Navegación -->
+          <button type="button" class="btn btn-secondary" (click)="cambiarSeccion('detalles')" *ngIf="seccionActual === 'adjuntos'">
+            Anterior
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cambiarSeccion('adjuntos')" *ngIf="seccionActual === 'detalles'">
+            Siguiente
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal para la Vista Previa -->
+  <div class="modal fade" id="vistaPreviaModal" tabindex="-1" aria-labelledby="vistaPreviaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="vistaPreviaModalLabel">Trámite Adjunto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <h6>{{ archivoSeleccionado?.nombre || 'Documento' }}</h6>
+          <img *ngIf="archivoSeleccionado?.url" [src]="archivoSeleccionado.url" alt="Vista previa del documento" class="img-fluid">
+          <p *ngIf="!archivoSeleccionado?.url">No hay vista previa disponible.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
 <div class="modal fade" id="filtroTramiteModal" tabindex="-1" aria-labelledby="filtroTramiteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -127,36 +239,3 @@
                         </select>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="onLimpiar()">Limpiar</button>
-                <button type="button" class="btn btn-primary" (click)="onBuscar()">Buscar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalAsignacion" tabindex="-1" aria-labelledby="modalAsignacionLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalAsignacionLabel">Asignar/Reasignar trámites</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="usuarioDropdown" class="form-label">Seleccione un asesor</label>
-                    <select id="usuarioDropdown" class="form-select" [(ngModel)]="usuarioSeleccionadoId">
-                        <option *ngFor="let usuario of usuariosTramitadores" [value]="usuario.id">
-                            {{ usuario.fullname }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" (click)="asignarTramites()">Asignar</button>
-            </div>
-        </div>
-    </div>
-</div>

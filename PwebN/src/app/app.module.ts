@@ -24,6 +24,7 @@ import { TramitesComponent } from './tramites/tramites.component';
 import { UsuariosDePwebComponent } from './usuarios-de-pweb/usuarios-de-pweb.component';
 import { UsuariosDeAppComponent } from './usuarios-de-app/usuarios-de-app.component';
 import { ReportsComponent } from './reports/reports.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ReportsComponent } from './reports/reports.component';
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    QuillModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
