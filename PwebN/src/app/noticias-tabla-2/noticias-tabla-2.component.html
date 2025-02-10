@@ -13,8 +13,8 @@
             <!-- Descripción -->
             <div class="mb-3 w-100">
                 <label for="descripcion" class="form-label">Descripción de la noticia</label>
-                <textarea id="descripcion" class="form-control" style="width: 100%;" rows="10" placeholder="Ingresa la descripción de la noticia" [(ngModel)]="descripcion"></textarea>
-            </div>
+                <div id="editor-container" style="height: 300px;"></div>
+              </div>
             
             <br>
             <!-- Botón seleccionar imagen y vista previa centrados -->
@@ -56,7 +56,7 @@
         </div>
         <div class="modal-body">
           <h3>{{ titulo }}</h3>
-          <p>{{ descripcion }}</p>
+          <p [innerHTML]="descripcion" style="max-width: 100%;"></p>
           <img [src]="imagenNoti" alt="Vista previa de la imagen" style="max-width: 100%;">
         </div>
         <div class="modal-footer">

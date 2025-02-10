@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth.service'; // Importamos el servicio de autenticación
 import { Router } from '@angular/router';
 import { Modal } from 'bootstrap';
+import Quill from 'quill';
+
 
 
 @Component({
@@ -18,7 +20,25 @@ export class NoticiasTabla2Component {
   token: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IEdhcmNpYSIsImV4cCI6MTcwNDkwMTM1N30.ORsWQWxVBCjlhItaZ1e63qBIqEL1LFOjKuydoEaDBZg'; // Token proporcionado
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
+  ngAfterViewInit() {
+    const quill = new Quill('#editor-container', {
+      theme: 'snow',
+      placeholder: 'Ingresa la descripción de la noticia...',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline'], // Formatos básicos
+          ['link', 'image'], // Enlaces e imágenes
+          [{ list: 'ordered' }, { list: 'bullet' }], // Listas
+          ['clean'] // Limpiar formato
+        ]
+      }
+    });
 
+    // Escuchar cambios en el editor
+    quill.on('text-change', () => {
+      this.descripcion = quill.root.innerHTML;
+    });
+  }
   ngOnInit() {
     // Escuchar el evento de cierre del modal
     const successModalElement = document.getElementById('successModal');

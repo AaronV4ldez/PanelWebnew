@@ -54,7 +54,8 @@ export class HeaderComponent implements OnInit {
       'usuarios-de-app-movil': 'Usuarios de App Móvil',
       reports: 'Reportes',
       'reports/details': 'Detalles del Reporte',
-      profile: 'Perfil de Usuario'
+      profile: 'Perfil de Usuario',
+      'noticias-create': 'Nueva  Nota Informativa'
     };
 
     this.pageTitle = titles[routePath || ''] || 'Página Desconocida';
