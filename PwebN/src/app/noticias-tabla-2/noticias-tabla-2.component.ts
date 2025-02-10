@@ -86,6 +86,7 @@ onImageChange(event: any) {
     if (modalElement) {
       const modal = new Modal(modalElement);
       modal.show();
+      this.adjustImagesInModal(); // Ajusta las imágenes cada vez que se abre el modal
     }
   }
 
@@ -134,6 +135,24 @@ onImageChange(event: any) {
   
   redirigirANoticias() {
     this.router.navigate(['/noticias']);
+  }
+
+
+  adjustImagesInModal(): void {
+    const modalBody = document.querySelector('.modal-body');
+    if (modalBody) {
+      const images = modalBody.querySelectorAll('img');
+      images.forEach((img: HTMLImageElement) => {
+        img.style.maxWidth = '90%'; // Reduce el tamaño para que no ocupe todo el ancho
+        img.style.maxHeight = '50vh'; // Reduce la altura máxima para que no sobrepase el modal
+        img.style.height = 'auto'; // Mantiene la proporción original
+        img.style.margin = '10px auto'; // Espaciado alrededor de la imagen y centrado
+        img.style.display = 'block'; // Evita que la imagen quede en línea con el texto
+        img.style.objectFit = 'contain'; // Evita que se estire y se deforme
+        img.style.borderRadius = '8px'; // Opcional: agregar bordes redondeados para mejor estética
+        img.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)'; // Opcional: añadir sombra para mejorar el diseño
+      });
+    }
   }
   
   
