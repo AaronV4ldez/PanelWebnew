@@ -42,11 +42,9 @@
             <button class="btn btn-light btn-sm me-1" (click)="abrirModal(noticia)">
               <i class="fa fa-eye"></i>
             </button>
-            <a [routerLink]="['/noticias-create', noticia.entry_id]">
-              <button class="btn btn-light btn-sm me-1" title="Editar">
-                <i class="fa fa-pen-to-square"></i>
-              </button>
-            </a>
+            <button class="btn btn-light btn-sm me-1" (click)="abrirEditarModal(noticia)" title="Editar">
+              <i class="fa fa-pen-to-square"></i>
+            </button>
             <button class="btn btn-light btn-sm" (click)="confirmarEliminar(noticia)" title="Eliminar">
               <i class="fa fa-trash"></i>
             </button>
@@ -94,21 +92,6 @@
       </div>
     </div>
   </div>
-   <!-- Modal -->
-   <div class="modal fade" id="noticiaModal" tabindex="-1" aria-labelledby="noticiaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 25%;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="noticiaModalLabel">{{ noticiaSeleccionada?.note_title }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="embed-responsive" style="position: relative; width: 100%; height: 0; padding-bottom: 177.78%;">
-            <iframe [src]="safeUrl(noticiaSeleccionada?.note_hyperlink)" 
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-                    frameborder="0" allowfullscreen></iframe>
-
-          </div>
 
   <!-- Modal de Éxito -->
   <div class="modal fade" id="eliminarExitoModal" tabindex="-1" aria-labelledby="eliminarExitoModalLabel" aria-hidden="true">
@@ -124,6 +107,79 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Edición de Noticia -->
+<div class="modal fade" id="editarNoticiaModal" tabindex="-1" aria-labelledby="editarNoticiaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editarNoticiaModalLabel">Editar Noticia</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <!-- Título -->
+          <div class="mb-3">
+            <label for="tituloNoticia" class="form-label">Título</label>
+            <input
+              type="text"
+              class="form-control"
+              id="tituloNoticia"
+              [(ngModel)]="noticiaSeleccionada.note_title"
+              name="tituloNoticia"
+              placeholder="Escribe el título de la noticia"
+            />
+          </div>
+
+          <!-- Editor de Descripción -->
+          <div class="mb-3">
+            <label for="editor-container" class="form-label">Descripción</label>
+            <div id="editor-container" style="height: 300px;"></div>
+          </div>
+
+          <!-- Enlace de la Imagen -->
+          <div class="mb-3">
+            <label for="enlaceImagen" class="form-label">Enlace de la Imagen de encabezado</label>
+            <input
+              type="text"
+              class="form-control"
+              id="enlaceImagen"
+              [(ngModel)]="noticiaSeleccionada.note_media_link"
+              name="enlaceImagen"
+              placeholder="Ingresa el enlace de la imagen"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarNoticia()">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal para Ver Noticia -->
+<div class="modal fade" id="noticiaModal" tabindex="-1" aria-labelledby="noticiaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="noticiaModalLabel">{{ noticiaSeleccionada?.note_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Fecha de Creación:</strong> {{ noticiaSeleccionada?.created_at | date: 'dd MMM yyyy hh:mm a' }}</p>
+        <p><strong>Contenido:</strong></p>
+        <div [innerHTML]="noticiaSeleccionada?.note_content"></div>
+        <p *ngIf="noticiaSeleccionada?.note_hyperlink">
+          <strong>Enlace:</strong>
+          <a [href]="noticiaSeleccionada.note_hyperlink" target="_blank">{{ noticiaSeleccionada.note_hyperlink }}</a>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

@@ -138,22 +138,21 @@ onImageChange(event: any) {
   }
 
 
-  adjustImagesInModal(): void {
-    const modalBody = document.querySelector('.modal-body');
-    if (modalBody) {
-      const images = modalBody.querySelectorAll('img');
-      images.forEach((img: HTMLImageElement) => {
-        img.style.maxWidth = '90%'; // Reduce el tamaño para que no ocupe todo el ancho
-        img.style.maxHeight = '50vh'; // Reduce la altura máxima para que no sobrepase el modal
-        img.style.height = 'auto'; // Mantiene la proporción original
-        img.style.margin = '10px auto'; // Espaciado alrededor de la imagen y centrado
-        img.style.display = 'block'; // Evita que la imagen quede en línea con el texto
-        img.style.objectFit = 'contain'; // Evita que se estire y se deforme
-        img.style.borderRadius = '8px'; // Opcional: agregar bordes redondeados para mejor estética
-        img.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)'; // Opcional: añadir sombra para mejorar el diseño
-      });
-    }
+adjustImagesInModal(): void {
+  const modalBody = document.querySelector('.modal-body');
+  if (modalBody) {
+    // Encuentra todas las imágenes dentro de la descripción
+    const images = modalBody.querySelectorAll('img');
+    images.forEach((img: HTMLImageElement) => {
+      img.style.maxWidth = '100%'; // Asegura que la imagen no exceda el ancho del modal
+      img.style.maxHeight = '60vh'; // Limita la altura de la imagen
+      img.style.height = 'auto'; // Mantén las proporciones
+      img.style.margin = '0 auto'; // Centra la imagen horizontalmente
+      img.style.display = 'block'; // Asegura que se comporte correctamente
+      img.style.objectFit = 'contain'; // Mantén las proporciones dentro del contenedor
+    });
   }
+}
   
   
 }
