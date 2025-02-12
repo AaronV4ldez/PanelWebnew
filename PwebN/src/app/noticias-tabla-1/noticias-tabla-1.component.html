@@ -134,12 +134,6 @@
             />
           </div>
 
-          <!-- Editor de Descripción -->
-          <div class="mb-3">
-            <label for="editor-container" class="form-label">Descripción</label>
-            <div id="editor-container" style="height: 300px;"></div>
-          </div>
-
           <!-- Enlace de la Imagen -->
           <div class="mb-3">
             <label for="enlaceImagen" class="form-label">Enlace de la Imagen de encabezado</label>
@@ -152,6 +146,13 @@
               placeholder="Ingresa el enlace de la imagen"
             />
           </div>
+
+          <!-- Editor de Descripción -->
+          <div class="mb-3">
+            <label for="editor-container" class="form-label">Descripción</label>
+            <div id="editor-container" style="height: 300px;"></div>
+          </div>
+
         </form>
       </div>
       <div class="modal-footer">
@@ -170,11 +171,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><strong>Fecha de Creación:</strong> {{ noticiaSeleccionada?.created_at | date: 'dd MMM yyyy hh:mm a' }}</p>
-        <p><strong>Contenido:</strong></p>
-        <div [innerHTML]="noticiaSeleccionada?.note_content"></div>
+        <!-- Muestra la imagen asociada -->
+        <div *ngIf="noticiaSeleccionada?.note_media_link" class="text-center mt-4">
+          <img
+            [src]="noticiaSeleccionada?.note_media_link"
+            style="max-width: 100%; max-height: 70vh; object-fit: contain; display: block; margin: 0 auto;"
+          />
+        </div>
+        <!-- Muestra la descripción -->
+        <!-- <p><strong>Contenido:</strong></p> -->
+        <div [innerHTML]="noticiaSeleccionada?.note_content" class="description-content"></div>
+
+        <!-- Muestra el enlace si existe -->
         <p *ngIf="noticiaSeleccionada?.note_hyperlink">
-          <strong>Enlace:</strong>
+          <strong>Enlace Externo:</strong>
           <a [href]="noticiaSeleccionada.note_hyperlink" target="_blank">{{ noticiaSeleccionada.note_hyperlink }}</a>
         </p>
       </div>

@@ -182,9 +182,24 @@ export class NoticiasTabla1Component implements OnInit {
   }
 
   abrirModal(noticia: any): void {
-    this.noticiaSeleccionada = noticia;
+    this.noticiaSeleccionada = noticia; // Selecciona la noticia
     const modalElement = document.getElementById('noticiaModal');
-    if (modalElement) new bootstrap.Modal(modalElement).show();
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  
+    // Ajustar imágenes dinámicas en el contenido
+    setTimeout(() => {
+      const images = document.querySelectorAll('.description-content img');
+      images.forEach((img: any) => {
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = '70vh';
+        img.style.objectFit = 'contain';
+        img.style.display = 'block';
+        img.style.margin = '0 auto';
+      });
+    }, 100);
   }
 
   confirmarEliminar(noticia: any): void {
@@ -194,7 +209,7 @@ export class NoticiasTabla1Component implements OnInit {
   }
 
   eliminarNoticia(): void {
-    const url = `https://apisprueba.fpfch.gob.mx/api/v1/mkt/news/${this.noticiaAEliminar.entry_id}`;
+    const url = `https://apisprueba.fpfch.gob.mx/api/v1/panel/mkt/news/${this.noticiaAEliminar.entry_id}`;
     const headers = new HttpHeaders({ Authorization: this.token });
 
     this.http.delete(url, { headers }).subscribe(
@@ -239,6 +254,20 @@ export class NoticiasTabla1Component implements OnInit {
 
   safeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+  adjustImagesInDescription(): void {
+    const modalBody = document.querySelector('.description-content');
+    if (modalBody) {
+      const images = modalBody.querySelectorAll('img');
+      images.forEach((img: HTMLImageElement) => {
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = '70vh';
+        img.style.height = 'auto';
+        img.style.display = 'block';
+        img.style.margin = '0 auto';
+        img.style.objectFit = 'contain';
+      });
+    }
   }
 
   

@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
       dashboard: 'Inicio',
       tramites: 'Trámites',
       noticias: 'Noticias',
-      'configuracion-de-publicidad': 'Configuración de Publicidad',
+      'configuracion-de-publicidad': 'Configuración',
       'usuarios-de-panel-web': 'Usuarios de Panel Web',
       'usuarios-de-app-movil': 'Usuarios de App Móvil',
       reports: 'Reportes',
