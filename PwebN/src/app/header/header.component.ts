@@ -49,12 +49,13 @@ export class HeaderComponent implements OnInit {
       dashboard: 'Inicio',
       tramites: 'Trámites',
       noticias: 'Noticias',
-      'configuracion-de-publicidad': 'Configuración de Publicidad',
+      'configuracion-de-publicidad': 'Configuración',
       'usuarios-de-panel-web': 'Usuarios de Panel Web',
       'usuarios-de-app-movil': 'Usuarios de App Móvil',
       reports: 'Reportes',
       'reports/details': 'Detalles del Reporte',
-      profile: 'Perfil de Usuario'
+      profile: 'Perfil de Usuario',
+      'noticias-create': 'Nueva  Nota Informativa'
     };
 
     this.pageTitle = titles[routePath || ''] || 'Página Desconocida';

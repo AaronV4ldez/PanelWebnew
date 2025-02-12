@@ -35,3 +35,19 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  .modal-content-body img {
+    max-width: 100%; /* La imagen no excederá el ancho del modal */
+    max-height: 70vh; /* La imagen no excederá el 70% de la altura de la ventana */
+    height: auto; /* Mantener las proporciones */
+    display: block; /* Asegurar que la imagen esté en bloque */
+    margin: 0 auto; /* Centrar la imagen */
+    object-fit: contain; /* Asegurar que la imagen no se deforme */
+  }
+  .description-content img {
+    max-width: 100%; /* La imagen no excederá el ancho del contenedor */
+    max-height: 70vh; /* La imagen no excederá el 70% de la altura de la ventana */
+    height: auto; /* Mantén las proporciones */
+    display: block; /* Asegura que cada imagen sea un bloque */
+    margin: 0 auto; /* Centra las imágenes */
+    object-fit: contain; /* Evita que la imagen se deforme */
+  }

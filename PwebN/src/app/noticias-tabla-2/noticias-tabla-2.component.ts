@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth.service'; // Importamos el servicio de autenticación
 import { Router } from '@angular/router';
 import { Modal } from 'bootstrap';
+import Quill from 'quill';
+
 
 
 @Component({
@@ -18,7 +20,25 @@ export class NoticiasTabla2Component {
   token: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IEdhcmNpYSIsImV4cCI6MTcwNDkwMTM1N30.ORsWQWxVBCjlhItaZ1e63qBIqEL1LFOjKuydoEaDBZg'; // Token proporcionado
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
+  ngAfterViewInit() {
+    const quill = new Quill('#editor-container', {
+      theme: 'snow',
+      placeholder: 'Ingresa la descripción de la noticia...',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline'], // Formatos básicos
+          ['link', 'image'], // Enlaces e imágenes
+          [{ list: 'ordered' }, { list: 'bullet' }], // Listas
+          ['clean'] // Limpiar formato
+        ]
+      }
+    });
 
+    // Escuchar cambios en el editor
+    quill.on('text-change', () => {
+      this.descripcion = quill.root.innerHTML;
+    });
+  }
   ngOnInit() {
     // Escuchar el evento de cierre del modal
     const successModalElement = document.getElementById('successModal');
@@ -66,6 +86,7 @@ onImageChange(event: any) {
     if (modalElement) {
       const modal = new Modal(modalElement);
       modal.show();
+      this.adjustImagesInModal(); // Ajusta las imágenes cada vez que se abre el modal
     }
   }
 
@@ -89,7 +110,7 @@ onImageChange(event: any) {
       note_title: this.titulo, // Título de la noticia
       note_content: this.descripcion, // Contenido de la noticia
       note_hyperlink: 'NULL', // Enlace, pero enviamos NULL
-      note_media_link: this.imagenNoti, // Enlace de la imagen
+      note_media_link: this.imagenNoti || 'NA', // Enlace de la imagen
       active: 1 // Estado activo
     };
   
@@ -115,6 +136,23 @@ onImageChange(event: any) {
   redirigirANoticias() {
     this.router.navigate(['/noticias']);
   }
+
+
+adjustImagesInModal(): void {
+  const modalBody = document.querySelector('.modal-body');
+  if (modalBody) {
+    // Encuentra todas las imágenes dentro de la descripción
+    const images = modalBody.querySelectorAll('img');
+    images.forEach((img: HTMLImageElement) => {
+      img.style.maxWidth = '100%'; // Asegura que la imagen no exceda el ancho del modal
+      img.style.maxHeight = '60vh'; // Limita la altura de la imagen
+      img.style.height = 'auto'; // Mantén las proporciones
+      img.style.margin = '0 auto'; // Centra la imagen horizontalmente
+      img.style.display = 'block'; // Asegura que se comporte correctamente
+      img.style.objectFit = 'contain'; // Mantén las proporciones dentro del contenedor
+    });
+  }
+}
   
   
 }

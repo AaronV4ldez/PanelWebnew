@@ -9,19 +9,19 @@
                 <label for="titulo" class="form-label">Título</label>
                 <input type="text" id="titulo" class="form-control" style="width: 100%;" placeholder="Ingresa el título" [(ngModel)]="titulo">
             </div>
-            
+
+              <!-- Botón seleccionar imagen y vista previa centrados -->
+              <div class="mb-3 w-100">
+                <label for="imagenNoti" class="form-label">Enlace de la imagen de encabezado</label>
+                <input type="text" id="imagenNoti" class="form-control" style="width: 100%;" placeholder="Ingresa el enlace de la imagen" [(ngModel)]="imagenNoti">
+            </div>
             <!-- Descripción -->
             <div class="mb-3 w-100">
                 <label for="descripcion" class="form-label">Descripción de la noticia</label>
-                <textarea id="descripcion" class="form-control" style="width: 100%;" rows="10" placeholder="Ingresa la descripción de la noticia" [(ngModel)]="descripcion"></textarea>
-            </div>
+                <div id="editor-container" style="height: 300px;"></div>
+              </div>
             
-            <br>
-            <!-- Botón seleccionar imagen y vista previa centrados -->
-            <div class="mb-3 w-100">
-                <label for="imagenNoti" class="form-label">Enlace de la imagen</label>
-                <input type="text" id="imagenNoti" class="form-control" style="width: 100%;" placeholder="Ingresa el enlace de la imagen" [(ngModel)]="imagenNoti">
-            </div>
+
         </div>
         
         <!-- Botones en la parte inferior -->
@@ -56,8 +56,8 @@
         </div>
         <div class="modal-body">
           <h3>{{ titulo }}</h3>
-          <p>{{ descripcion }}</p>
           <img [src]="imagenNoti" alt="Vista previa de la imagen" style="max-width: 100%;">
+          <p [innerHTML]="descripcion" style="max-width: 100%;"></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
