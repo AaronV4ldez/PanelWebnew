@@ -11,6 +11,7 @@ import { TramitesComponent } from './tramites/tramites.component';
 import { UsuariosDePwebComponent } from './usuarios-de-pweb/usuarios-de-pweb.component';
 import { UsuariosDeAppComponent } from './usuarios-de-app/usuarios-de-app.component';
 import { ReportsComponent } from './reports/reports.component';
+import { BusquedaDeInformacionArchivoComponent } from './busqueda-de-informacion-archivo/busqueda-de-informacion-archivo.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: 'tramites', component: TramitesComponent},
   { path: 'usuarios-de-panel-web', component: UsuariosDePwebComponent},
   { path: 'usuarios-de-app-movil', component: UsuariosDeAppComponent},
-  { path: 'reports', component: ReportsComponent}
+  { path: 'reports', component: ReportsComponent},
+  { path: 'busqueda-de-informacion-archivo', component: BusquedaDeInformacionArchivoComponent}
 
 ];
 

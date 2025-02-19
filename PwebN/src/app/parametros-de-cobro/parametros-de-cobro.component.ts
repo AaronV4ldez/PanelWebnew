@@ -53,12 +53,24 @@ export class ParametrosDeCobroComponent implements OnInit {
 
   guardarInformacion() {
     this.requestsCompleted = 0; // Reiniciar el contador cada vez que se guarda la información
-
+  
+    // Validar que los valores de display_order no se repitan (excepto 0)
+    const displayOrders = this.bridgesConfig.map(bridge => bridge.display_order);
+    const duplicateOrders = displayOrders.filter((order, index, self) => 
+      order !== 0 && self.indexOf(order) !== index
+    );
+  
+    if (duplicateOrders.length > 0) {
+      alert(`Error: Los siguientes valores de "Orden" están duplicados: ${[...new Set(duplicateOrders)].join(', ')}`);
+      return;
+    }
+  
+    // Enviar cada puente con su configuración a la API
     this.bridgesConfig.forEach((bridge, index, array) => {
       const prepayAmountsValue = bridge.prepayOptions.length > 0 
         ? bridge.prepayOptions.join(',') // Si hay valores, los une con comas
         : "0"; // Si está vacío, usa "0"
-
+  
       const payload = {
         entry_id: bridge.entry_id,
         bridge_name: bridge.bridge_name,
@@ -68,14 +80,15 @@ export class ParametrosDeCobroComponent implements OnInit {
         annual_renew_fee_us: 0,
         prepay_amounts: prepayAmountsValue, // Asigna el valor procesado aquí
         is_billable: bridge.is_billable || 0,
-        has_cams: bridge.has_cams || 1
+        has_cams: bridge.has_cams || 1,
+        display_order: bridge.display_order // Enviar el valor de "Orden"
       };
-
+  
       const headers = new HttpHeaders({
         'Authorization': this.token,
         'Content-Type': 'application/json'
       });
-
+  
       this.http.post(this.updateApiUrl, payload, { headers })
         .pipe(catchError(this.handleError))
         .subscribe(response => {

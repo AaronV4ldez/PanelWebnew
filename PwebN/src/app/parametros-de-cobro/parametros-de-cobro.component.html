@@ -47,7 +47,20 @@
         </table>
       </div>
     </div>
-  </div>
+
+      <!-- Input para display_order -->
+      <div *ngIf="bridge.display_order !== 0" class="row mb-3">
+        <div class="col-md-4">
+          <label for="displayOrder{{ bridge.bridge_name }}" class="form-label">Orden</label>
+          <input
+            [(ngModel)]="bridge.display_order"
+            id="displayOrder{{ bridge.bridge_name }}"
+            class="form-control form-control-sm"
+            type="number"
+          />
+        </div>
+      </div>
+    </div>
 
   <div class="p-4 rounded shadow-sm">
     <h3 class="text-dark">Parámetros Telepeaje</h3>
