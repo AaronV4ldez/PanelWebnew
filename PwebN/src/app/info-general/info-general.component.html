@@ -60,3 +60,33 @@
       </div>
     </div>
   </div>
+  <!-- Modal para Editar Documento -->
+<div class="modal fade" id="editarDocumentoModal" tabindex="-1" aria-labelledby="editarDocumentoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarDocumentoModalLabel">Editar Documento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <!-- Título -->
+            <div class="mb-3">
+              <label for="tituloDocumento" class="form-label">Título</label>
+              <input type="text" class="form-control" id="tituloDocumento" [(ngModel)]="selectedDocument.doc_title" name="tituloDocumento">
+            </div>
+  
+            <!-- Editor de Descripción -->
+            <div class="mb-3">
+              <label for="editor-container" class="form-label">Descripción</label>
+              <div id="editor-container" class="quill-editor-container"></div> 
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="guardarDocumento()">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
