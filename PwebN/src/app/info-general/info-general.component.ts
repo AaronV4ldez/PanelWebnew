@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 declare var bootstrap: any;
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import Quill from 'quill';
@@ -17,6 +17,8 @@ export class InfoGeneralComponent implements OnInit, AfterViewInit {
   selectedDocument: any = {}; 
   quillEditor: Quill | null = null;
   editModalInstance: any = null; 
+  private apiUrl: string = 'https://apisprueba.fpfch.gob.mx/api/v1/panel/config/publish/app-doc/';
+  private token: string = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjg2OSwibmFtZSI6IkFhclx1MDBmM24gVmFsZGV6IFRlc3QiLCJleHAiOjE3Mjk3ODc3NjN9.T9xaWtCBSbaBC8dHBjT5_oUCIBDWSnZknSiibAgMDgQ';
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
@@ -75,15 +77,12 @@ export class InfoGeneralComponent implements OnInit, AfterViewInit {
   }
 
   editDocument(doc: any): void {
-    this.selectedDocument = { ...doc }; // Clonamos el objeto para evitar modificar el original.
-  
-    // **🛑 Antes de inicializar Quill, destruimos cualquier instancia previa**
-    this.destroyQuill();
-  
+    this.selectedDocument = { ...doc };
+
     setTimeout(() => {
       this.initQuill();
-    }, 300); // Pequeño delay para asegurar que el DOM está listo.
-  
+    }, 300); 
+
     const modalElement = document.getElementById('editarDocumentoModal');
     if (modalElement) {
       this.editModalInstance = new bootstrap.Modal(modalElement);
@@ -93,22 +92,22 @@ export class InfoGeneralComponent implements OnInit, AfterViewInit {
   
   initQuill(): void {
     const quillContainer = document.getElementById('editor-container');
-
-    // **🛑 Evitar inicialización si Quill ya existe**
+  
     if (this.quillEditor) {
-      console.warn('⚠️ Quill ya está inicializado, se evitará la duplicación.');
+      console.warn('⚠️ Quill ya está inicializado, solo actualizando contenido.');
+      if (this.selectedDocument && this.selectedDocument.doc_content) {
+        this.quillEditor.clipboard.dangerouslyPasteHTML(this.selectedDocument.doc_content);
+      } else {
+        this.quillEditor.setText('');
+      }
       return;
     }
-
+  
     if (!quillContainer) {
       console.error('❌ No se encontró el contenedor de Quill.');
       return;
     }
-
-    // **🔥 Limpiar el contenedor antes de inicializar Quill**
-    quillContainer.innerHTML = '';
-
-    // **✅ Inicializar Quill correctamente**
+  
     this.quillEditor = new Quill('#editor-container', {
       theme: 'snow',
       placeholder: 'Escribe aquí...',
@@ -130,26 +129,18 @@ export class InfoGeneralComponent implements OnInit, AfterViewInit {
       }
     });
 
-    // **📌 Cargar contenido en Quill si existe**
     if (this.selectedDocument && this.selectedDocument.doc_content) {
-      this.quillEditor.root.innerHTML = this.selectedDocument.doc_content;
+      this.quillEditor.clipboard.dangerouslyPasteHTML(this.selectedDocument.doc_content);
+    } else {
+      this.quillEditor.setText('');
     }
 
     console.log('✅ Quill inicializado correctamente sin duplicaciones');
   }
   
-  destroyQuill(): void {
-    if (this.quillEditor) {
-      console.log('🗑 Eliminando instancia previa de Quill...');
-      this.quillEditor.root.innerHTML = ''; // Limpia el contenido de Quill
-      this.quillEditor = null; // Elimina la instancia
-    }
-  }
-  
   resetModal(): void {
     console.log('🔄 Reiniciando modal y limpiando Quill...');
-    this.destroyQuill();
-    this.selectedDocument = {}; // Limpiar el objeto seleccionado
+    this.selectedDocument = {}; 
   }
 
   guardarDocumento(): void {
@@ -157,11 +148,37 @@ export class InfoGeneralComponent implements OnInit, AfterViewInit {
       this.selectedDocument.doc_content = this.quillEditor.root.innerHTML;
     }
 
-    console.log('Guardando cambios del documento:', this.selectedDocument);
+    const updatedDocument = {
+      doc_type: this.selectedDocument.doc_type,
+      doc_title: this.selectedDocument.doc_title,
+      doc_content: this.selectedDocument.doc_content,
+      mobile: this.selectedDocument.mobile,
+      web: this.selectedDocument.web,
+      active: this.selectedDocument.active
+    };
 
-    // 🛑 Cerrar modal correctamente después de guardar
-    if (this.editModalInstance) {
-      this.editModalInstance.hide();
-    }
+    console.log('📤 Enviando documento actualizado:', updatedDocument);
+
+    const headers = new HttpHeaders({
+      Authorization: this.token,
+      'Content-Type': 'application/json'
+    });
+
+    this.http.post(this.apiUrl, updatedDocument, { headers }).subscribe(
+      (response) => {
+        console.log('✅ Documento actualizado con éxito:', response);
+
+        if (this.editModalInstance) {
+          this.editModalInstance.hide();
+        }
+
+        this.fetchData();
+        alert('Documento actualizado correctamente.');
+      },
+      (error) => {
+        console.error('❌ Error al actualizar el documento:', error);
+        alert('Hubo un error al actualizar el documento.');
+      }
+    );
   }
 }

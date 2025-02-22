@@ -56,7 +56,8 @@ export class HeaderComponent implements OnInit {
       'reports/details': 'Detalles del Reporte',
       profile: 'Perfil de Usuario',
       'noticias-create': 'Nueva  Nota Informativa',
-      'busqueda-de-informacion-archivo': 'Búsqueda de Información de Archivo'
+      'busqueda-de-informacion-archivo': 'Búsqueda de Información de Archivo',
+      'info-general': 'Información General',
     };
 
     this.pageTitle = titles[routePath || ''] || 'Página Desconocida';

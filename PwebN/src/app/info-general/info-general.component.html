@@ -5,13 +5,13 @@
     <h2 class="mb-4">Información General</h2>
   
     <!-- Barra de herramientas -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="d-flex">
         <input type="text" class="form-control me-2" placeholder="Buscar..." [(ngModel)]="searchText">
         <button class="btn btn-primary"><i class="fas fa-search"></i></button>
       </div>
       <button class="btn btn-secondary"><i class="fas fa-file-export"></i> Exportar</button>
-    </div>
+    </div> -->
   
     <!-- Tabla de información general -->
     <div class="table-responsive">
@@ -30,7 +30,11 @@
             <td>{{ doc.doc_title }}</td>
             <td>{{ doc.doc_content | slice:0:40 }}...</td>
             <td>
-              <button class="btn btn-outline-primary btn-sm me-1" (click)="editDocument(doc)">
+              <button
+               class="btn btn-outline-primary btn-sm me-1" 
+               (click)="editDocument(doc)"
+               style="background-color: rgb(229, 00, 105); border-radius: 10px; border-color: rgb(192, 4, 92); color: white;"
+               >
                 <i class="fas fa-edit"></i>
               </button>
               <button class="btn btn-outline-secondary btn-sm" (click)="viewDocument(doc)">
@@ -85,7 +89,11 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="guardarDocumento()">Guardar Cambios</button>
+          <button 
+          type="button" 
+          class="btn btn-primaryw" (click)="guardarDocumento()"
+          style="background-color: rgb(229, 00, 105); border-radius: 10px; border-color: rgb(192, 4, 92); color: white;"
+          >Guardar Cambios</button>
         </div>
       </div>
     </div>
