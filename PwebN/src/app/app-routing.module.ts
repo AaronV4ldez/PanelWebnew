@@ -12,6 +12,7 @@ import { UsuariosDePwebComponent } from './usuarios-de-pweb/usuarios-de-pweb.com
 import { UsuariosDeAppComponent } from './usuarios-de-app/usuarios-de-app.component';
 import { ReportsComponent } from './reports/reports.component';
 import { BusquedaDeInformacionArchivoComponent } from './busqueda-de-informacion-archivo/busqueda-de-informacion-archivo.component';
+import { InfoGeneralComponent } from './info-general/info-general.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'usuarios-de-panel-web', component: UsuariosDePwebComponent},
   { path: 'usuarios-de-app-movil', component: UsuariosDeAppComponent},
   { path: 'reports', component: ReportsComponent},
-  { path: 'busqueda-de-informacion-archivo', component: BusquedaDeInformacionArchivoComponent}
+  { path: 'busqueda-de-informacion-archivo', component: BusquedaDeInformacionArchivoComponent},
+  { path: 'info-general', component: InfoGeneralComponent}
 
 ];
 
