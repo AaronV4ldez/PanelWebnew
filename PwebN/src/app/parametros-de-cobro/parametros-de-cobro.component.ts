@@ -80,7 +80,7 @@ export class ParametrosDeCobroComponent implements OnInit {
         annual_renew_fee_us: 0,
         prepay_amounts: prepayAmountsValue, // Asigna el valor procesado aquí
         is_billable: bridge.is_billable || 0,
-        has_cams: bridge.has_cams || 1,
+        has_cams: bridge.has_cams,
         display_order: bridge.display_order // Enviar el valor de "Orden"
       };
   
